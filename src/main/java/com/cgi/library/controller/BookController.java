@@ -14,25 +14,28 @@ import java.util.UUID;
 @RequestMapping("/api/book")
 public class BookController {
 
-    @Autowired
-    private BookService bookService;
-
-    @GetMapping(value = "getBooks")
-    public ResponseEntity<Page<BookDTO>> getBooks(Pageable pageable) {
-        return ResponseEntity.ok(bookService.getBooks(pageable));
+    // @Autowired notation or using a constructor injection. https://stackoverflow.com/questions/71712116/autowired-or-private-final
+    private final BookService bookService; // "Personally, I follow the rule, 'if it can be final, it should be final.'"
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
     }
 
-    @GetMapping(value = "getBook")
+    @GetMapping("/getBooks")
+    public ResponseEntity<Page<BookDTO>> getBooks(Pageable pageable) {
+        return ResponseEntity.ok(bookService.getBooks(pageable)); //https://www.baeldung.com/spring-response-entity
+    }
+
+    @GetMapping("/getBook")
     public ResponseEntity<BookDTO> getBook(@RequestParam(value = "bookId") UUID bookId) {
         return ResponseEntity.ok(bookService.getBook(bookId));
     }
 
-    @PostMapping(value = "saveBook")
+    @PostMapping("/saveBook")
     public ResponseEntity<String> saveBook(@RequestBody BookDTO book) {
         return ResponseEntity.ok(String.valueOf(bookService.saveBook(book)));
     }
 
-    @DeleteMapping(value = "deleteBook")
+    @DeleteMapping("/deleteBook")
     public ResponseEntity<String> deleteBook(@RequestParam(value = "bookId") UUID bookId) {
         bookService.deleteBook(bookId);
         return ResponseEntity.ok("");
