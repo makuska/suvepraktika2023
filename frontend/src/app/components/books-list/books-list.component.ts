@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BookService } from '../../services/book.service';
 import { Observable } from 'rxjs';
 import { Page } from '../../models/page';
+import { PageRequest } from '../../models/page';
 import { Book } from '../../models/book';
 
 
@@ -15,7 +16,6 @@ export class BooksListComponent implements OnInit {
   books$!: Observable<Page<Book>>;
   pageSize = 10;
   pageSizeOptions = [5, 10, 25, 100];
-
   constructor(
     private bookService: BookService,
   ) {
@@ -23,10 +23,10 @@ export class BooksListComponent implements OnInit {
 
   ngOnInit(): void {
     // TODO this observable should emit books taking into consideration pagination, sorting and filtering options.
-    this.books$ = this.bookService.getBooks({page: 0, size: this.pageSize}); //not really sure what's the issue here...
+    this.books$ = this.bookService.getBooks({pageSize: this.pageSize}); // this method changes the pageSize, when user enters the "/books" resource
   }
 
   onPageChange(event: any) {
-    this.books$ = this.bookService.getBooks({page: event.pageIndex, size: event.pageSize});
+    this.books$ = this.bookService.getBooks({pageSize: event.pageSize}); // this method changes the "Items per page:" value
   }
 }
