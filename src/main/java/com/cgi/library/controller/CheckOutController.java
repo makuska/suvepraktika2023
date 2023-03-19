@@ -14,13 +14,23 @@ import java.util.UUID;
 @RequestMapping("/api/checkout")
 public class CheckOutController {
 
-    @Autowired
-    private CheckOutService checkOutService;
+    private final CheckOutService checkOutService;
+
+    public CheckOutController(CheckOutService checkOutService) {
+        this.checkOutService = checkOutService;
+    }
 
     @GetMapping(value = "getCheckouts")
     public ResponseEntity<Page<CheckOutDTO>> getCheckOuts(Pageable pageable) {
         return ResponseEntity.ok(checkOutService.getCheckOuts(pageable));
     }
+//    @GetMapping(value = "getCheckouts")
+//    public ResponseEntity<Page<CheckOutDTO>> getCheckOuts(@RequestParam(name = "sort_by", defaultValue = "id") String sortBy,
+//                                                          @RequestParam(name = "sort_dir", defaultValue = "asc") String sortDirection,
+//                                                          Pageable pageable) {
+//        return ResponseEntity.ok(checkOutService.getCheckOuts(sortBy, sortDirection, pageable));
+//    }
+
 
     @GetMapping(value = "getCheckout")
     public ResponseEntity<CheckOutDTO> getCheckOut(@RequestParam(value = "checkOutId") UUID checkOutId) {

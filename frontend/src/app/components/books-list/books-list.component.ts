@@ -14,10 +14,10 @@ import {PageEvent, MatPaginator} from "@angular/material/paginator";
 export class BooksListComponent implements OnInit {
 
   books$!: Observable<Page<Book>>;
-  pageSize = 10; // Default value for items per page
-  pageSizeOptions = [5, 10, 25, 100];
-  pageIndex = 0; // Start paging at 0
-  currentPageSize = this.pageSize;
+  pageSize: number = 10; // Default value for items per page
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageIndex: number = 0; // Start paging at 0
+  currentPageSize: number = this.pageSize;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor( private bookService: BookService,) {}
 
