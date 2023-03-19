@@ -49,7 +49,8 @@
           <tr mat-header-row *matHeaderRowDef="['title', 'author', 'genre', 'year', 'added', 'checkOutCount', 'status']"></tr>
           <tr mat-row *matRowDef="let book; columns: ['title', 'author', 'genre', 'year', 'added', 'checkOutCount', 'status']"></tr>
         </table>
-        <mat-paginator  [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [length]="books?.totalElements" (page)="onPageChange($event)"></mat-paginator>
+        <!-- this changes the paging forward -->
+        <mat-paginator [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [length]="books?.totalElements" (page)="changePage($event)"></mat-paginator>
         <!-- [pageIndex]="pageIndex" -->
       </mat-nav-list>
     </mat-card-content>

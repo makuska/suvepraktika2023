@@ -14,8 +14,9 @@ import { Book } from '../../models/book';
 export class BooksListComponent implements OnInit {
 
   books$!: Observable<Page<Book>>;
-  pageSize = 10;
+  pageSize = 10; // Default value for items per page
   pageSizeOptions = [5, 10, 25, 100];
+  pageIndex = 0; // Start paging at 0
   constructor(
     private bookService: BookService,
   ) {
@@ -23,10 +24,12 @@ export class BooksListComponent implements OnInit {
 
   ngOnInit(): void {
     // TODO this observable should emit books taking into consideration pagination, sorting and filtering options.
-    this.books$ = this.bookService.getBooks({pageSize: this.pageSize}); // this method changes the pageSize, when user enters the "/books" resource
+    this.books$ = this.bookService.getBooks({pageSize: this.pageSize}); // changing the pageSize, when user enters the "/books" resource
   }
 
-  onPageChange(event: any) {
-    this.books$ = this.bookService.getBooks({pageSize: event.pageSize}); // this method changes the "Items per page:" value
+  // Source: OpenAI (tried to use an unknown component?) and https://keepgrowing.in/angular/handle-server-side-pagination-in-an-angular-application/
+  changePage(event: any) {
+    this.books$ = this.bookService.getBooks({pageIndex: event.pageIndex, pageSize: event.pageSize});
+    this.pageIndex = event.pageIndex;
   }
 }
