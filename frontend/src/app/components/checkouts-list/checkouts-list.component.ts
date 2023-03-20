@@ -13,7 +13,7 @@ import { Checkout } from "../../models/checkout";
 // https://angular.io/api/core/OnInit
 export class CheckoutsListComponent implements OnInit{
 
-  checkouts$!: Observable<Page<Checkout>>; //hmm
+  checkouts$!: Observable<Page<Checkout>>; // https://gist.github.com/makuska/84457e0b6f614301b14575aaeaa0d917#checkouts-observablepage
   pageSize: number = 10;
   pageIndex: number = 0;
   currentPageSize: number = this.pageSize;
@@ -27,7 +27,12 @@ export class CheckoutsListComponent implements OnInit{
   changePage(event: PageEvent): void {
     this.pageIndex = event.pageIndex;
     this.currentPageSize = event.pageSize;
-    this.getCheckouts();
+    this.checkouts$ = this.checkoutService.getCheckouts({
+      pageSize: this.currentPageSize,
+      pageIndex: this.pageIndex
+    }); // TS2551 error; because getCheckouts is a method that belongs to the CheckoutService class
+    // and not the CheckoutsListComponent class. I
+    //this.getCheckouts(); method replaced with the code above (3 lines)
   }
 
 }

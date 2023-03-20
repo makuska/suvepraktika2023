@@ -5,7 +5,6 @@ import { Page } from '../../models/page';
 import { Book } from '../../models/book';
 import { PageEvent, MatPaginator } from "@angular/material/paginator";
 
-
 @Component({
   selector: 'app-books-list',
   templateUrl: './books-list.component.html',
