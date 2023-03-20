@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import {Observable} from "rxjs";
+import {Page} from "../../models/page";
+import {Checkout} from "../../models/checkout";
 
 @Component({
   selector: 'app-checkouts-detail',
@@ -6,5 +9,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./checkouts-detail.component.css']
 })
 export class CheckoutsDetailComponent {
+  checkouts$!: Observable<Page<Checkout>>;
 
 }

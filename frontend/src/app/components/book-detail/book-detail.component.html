@@ -1,5 +1,4 @@
-<!--<pre>{{book$ | async | json}}</pre>-->
-<!--Source: ChatAI-->
+<!--<pre>{{book$ | async | json}}</pre>--> //https://gist.github.com/makuska/84457e0b6f614301b14575aaeaa0d917#prebook--async--jsonpre
 <div class="container mat-elevation-z4">
   <mat-card>
     <mat-card-title>Book Details</mat-card-title>
@@ -13,7 +12,7 @@
         <p>Checkout Count: {{book.checkOutCount}}</p>
 <!--        <p id="colored-status">Status: </p>-->
         <p [ngClass]="{ 'status-borrowed': book.status === 'BORROWED',
-            'status-available': book.status === 'AVAILABLE' }">{{book.status}}</p>
+            'status-available': book.status === 'AVAILABLE' }">{{book.status}}</p> <!--Source: ChatAI-->
         <p>Due Date: {{book.dueDate}}</p>
 <!--        <p>Comment: {{book.comment}}</p> -->
       </ng-container>

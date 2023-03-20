@@ -13,10 +13,7 @@ export class BookService {
 
   private readonly baseUrl = environment.backendUrl + '/api/book';
 
-  constructor(
-    private http: HttpClient,
-  ) {
-  }
+  constructor( private http: HttpClient, ) {}
 
   getBooks(filter: Partial<PageRequest>): Observable<Page<Book>> {
     const url = this.baseUrl + '/getBooks';

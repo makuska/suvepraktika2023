@@ -16,6 +16,7 @@ export class CheckoutsListComponent implements OnInit{
   checkouts$!: Observable<Page<Checkout>>; // https://gist.github.com/makuska/84457e0b6f614301b14575aaeaa0d917#checkouts-observablepage
   pageSize: number = 10;
   pageIndex: number = 0;
+  pageSizeOptions = [5, 10, 25, 100];
   currentPageSize: number = this.pageSize;
 
   constructor( private checkoutService: CheckoutService) {}
