@@ -3,7 +3,7 @@ import { BookService } from '../../services/book.service';
 import { Observable } from 'rxjs';
 import { Page } from '../../models/page';
 import { Book } from '../../models/book';
-import {PageEvent, MatPaginator} from "@angular/material/paginator";
+import { PageEvent, MatPaginator } from "@angular/material/paginator";
 
 
 @Component({
@@ -26,7 +26,7 @@ export class BooksListComponent implements OnInit {
     this.books$ = this.bookService.getBooks({pageSize: this.pageSize}); // changing the pageSize, when user enters the "/books" resource
   }
 
-  // Source: OpenAI (tried to use an unknown component?) and https://keepgrowing.in/angular/handle-server-side-pagination-in-an-angular-application/
+  // Source: OpenAI (code was way too cluttered) and https://keepgrowing.in/angular/handle-server-side-pagination-in-an-angular-application/
   // Component methods
   getBooks(): void {
     const params = {
