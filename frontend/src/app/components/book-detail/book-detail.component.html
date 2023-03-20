@@ -1,1 +1,22 @@
-<pre>{{book$ | async | json}}</pre>
+<!--<pre>{{book$ | async | json}}</pre>-->
+<!--Source: ChatAI-->
+<div class="container mat-elevation-z4">
+  <mat-card>
+    <mat-card-title>Book Details</mat-card-title>
+    <mat-card-content>
+      <ng-container *ngIf="(book$ | async) as book">
+        <h3>Title: {{book.title}}</h3>
+        <p>Author: {{book.author}}</p>
+        <p>Genre: {{book.genre}}</p>
+        <p>Year: {{book.year}}</p>
+        <p>Added: {{book.added}}</p>
+        <p>Checkout Count: {{book.checkOutCount}}</p>
+<!--        <p id="colored-status">Status: </p>-->
+        <p [ngClass]="{ 'status-borrowed': book.status === 'BORROWED',
+            'status-available': book.status === 'AVAILABLE' }">{{book.status}}</p>
+        <p>Due Date: {{book.dueDate}}</p>
+<!--        <p>Comment: {{book.comment}}</p> -->
+      </ng-container>
+    </mat-card-content>
+  </mat-card>
+</div>

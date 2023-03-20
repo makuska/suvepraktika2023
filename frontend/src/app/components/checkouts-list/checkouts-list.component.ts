@@ -31,7 +31,7 @@ export class CheckoutsListComponent implements OnInit{
       pageSize: this.currentPageSize,
       pageIndex: this.pageIndex
     }); // TS2551 error; because getCheckouts is a method that belongs to the CheckoutService class
-    // and not the CheckoutsListComponent class. I
+    // and not the CheckoutsListComponent class.
     //this.getCheckouts(); method replaced with the code above (3 lines)
   }
 
