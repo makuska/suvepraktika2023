@@ -27,17 +27,21 @@ export class BooksListComponent implements OnInit {
 
   // Source: OpenAI (code was way too cluttered) and https://keepgrowing.in/angular/handle-server-side-pagination-in-an-angular-application/
   // Component methods
-  getBooks(): void {
-    const params = {
-      pageIndex: this.pageIndex,
-      pageSize: this.currentPageSize
-    };
-    this.books$ = this.bookService.getBooks(params);
-  }
+  // getBooks(): void {
+  //   const params = {
+  //     pageIndex: this.pageIndex,
+  //     pageSize: this.currentPageSize
+  //   };
+  //   this.books$ = this.bookService.getBooks(params);
+  // }
 
   changePage(event: PageEvent): void {
     this.pageIndex = event.pageIndex;
     this.currentPageSize = event.pageSize;
-    this.getBooks();
+    // this.getBooks();
+    this.books$ = this.bookService.getBooks({
+      pageSize: this.currentPageSize,
+      pageIndex: this.pageIndex
+    });
   }
 }
