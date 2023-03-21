@@ -1,2 +1,17 @@
-<p>checkouts-detail works!</p>
-<pre>{{checkouts$ | async | json}}</pre>
+<h1>HI?</h1>
+<div class="container mat-elevation-z4">
+  <mat-card>
+    <mat-card-title>Checkout details</mat-card-title>
+    <mat-card-content>
+      <ng-container *ngIf="(checkout$ | async) as checkout">
+        <p>Borrower: {{checkout.borrowerFirstName}} {{checkout.borrowerLastName}}</p>
+        <p>Book: {{checkout.borrowedBook.title}}</p>
+        <p>Author: {{checkout.borrowedBook.author}}</p>
+        <p>Year of publication: {{checkout.borrowedBook.year}}</p>
+        <p>Genre: {{checkout.borrowedBook.genre}}</p>
+        <p>Checkout Date: {{checkout.checkedOutDate}}</p>
+        <p>Due Date: {{checkout.dueDate}}</p>
+      </ng-container>
+    </mat-card-content>
+  </mat-card>
+</div>

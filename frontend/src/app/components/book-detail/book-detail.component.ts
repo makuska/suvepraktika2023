@@ -20,6 +20,7 @@ export class BookDetailComponent implements OnInit {
   ) {
   }
 
+  // https://gist.github.com/makuska/84457e0b6f614301b14575aaeaa0d917#ngoninit-void--thisbook--thisrouteparams-pipemapparams--paramsid-pipeswitchmapid--thisbookservicegetbookid
   ngOnInit(): void {
     this.book$ = this.route.params
       .pipe(map(params => params['id']))

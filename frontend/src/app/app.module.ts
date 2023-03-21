@@ -8,7 +8,7 @@ import { MaterialModule } from './material/material.module';
 import { BooksListComponent } from './components/books-list/books-list.component';
 import { BookDetailComponent } from './components/book-detail/book-detail.component';
 import { HttpClientModule } from '@angular/common/http';
-import {FormsModule} from "@angular/forms";
+import { FormsModule } from "@angular/forms";
 import { CheckoutsListComponent } from './components/checkouts-list/checkouts-list.component';
 import { CheckoutsDetailComponent } from './components/checkouts-detail/checkouts-detail.component';
 
@@ -26,7 +26,7 @@ import { CheckoutsDetailComponent } from './components/checkouts-detail/checkout
         AppRoutingModule,
         BrowserAnimationsModule,
         MaterialModule,
-        FormsModule
+        FormsModule,
     ],
   providers: [],
   bootstrap: [AppComponent]
