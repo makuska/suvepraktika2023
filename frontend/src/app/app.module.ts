@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from "@angular/forms";
 import { CheckoutsListComponent } from './components/checkouts-list/checkouts-list.component';
 import { CheckoutsDetailComponent } from './components/checkouts-detail/checkouts-detail.component';
+// import { MatSortModule } from "@angular/material/sort";
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { CheckoutsDetailComponent } from './components/checkouts-detail/checkout
         BrowserAnimationsModule,
         MaterialModule,
         FormsModule,
+        // MatSortModule
     ],
   providers: [],
   bootstrap: [AppComponent]

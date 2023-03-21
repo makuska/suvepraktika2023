@@ -4,36 +4,36 @@
     <mat-card-title>Checkouts</mat-card-title>
     <mat-card-content>
       <mat-nav-list *ngIf="(checkouts$ | async) as checkouts">
-        <table mat-table [dataSource]="checkouts.content">
+        <table mat-table [dataSource]="checkouts.content" matSort (matSortChange)="sortCurrentPage($event)">
 
           <ng-container matColumnDef="borrower">
-            <th mat-header-cell *matHeaderCellDef>Borrowers name</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Borrowers name</th>
             <td mat-cell *matCellDef="let checkout">{{checkout.borrowerFirstName}} {{checkout.borrowerLastName}}</td>
           </ng-container>
 
           <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef>Title</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
             <td mat-cell *matCellDef="let checkout"><a [routerLink]="['/checkouts', checkout.id]">
               {{checkout.borrowedBook.title}}</a></td> //ERROR TypeError: checkout_r17.borrowedBook is undefined
           </ng-container>
 
           <ng-container matColumnDef="author">
-            <th mat-header-cell *matHeaderCellDef>Author</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Author</th>
             <td mat-cell *matCellDef="let checkout">{{checkout.borrowedBook.author}}</td>
           </ng-container>
 
           <ng-container matColumnDef="year">
-            <th mat-header-cell *matHeaderCellDef>Year</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Year</th>
             <td mat-cell *matCellDef="let checkout">{{checkout.borrowedBook.year}}</td>
           </ng-container>
 
           <ng-container matColumnDef="checkoutDate">
-            <th mat-header-cell *matHeaderCellDef>Checkout Date</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Checkout Date</th>
             <td mat-cell *matCellDef="let checkout">{{checkout.checkedOutDate}}</td>
           </ng-container>
 
           <ng-container matColumnDef="dueDate">
-            <th mat-header-cell *matHeaderCellDef>Due Date</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Due Date</th>
             <td mat-cell *matCellDef="let checkout">{{checkout.dueDate}}</td>
           </ng-container>
 

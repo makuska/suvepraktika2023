@@ -4,6 +4,7 @@ import { Page } from '../../models/page';
 import { PageEvent, MatPaginator } from "@angular/material/paginator";
 import { CheckoutService } from "../../services/checkout.service";
 import { Checkout } from "../../models/checkout";
+import { Sort } from "@angular/material/sort";
 
 @Component({
   selector: 'app-checkouts-list',
@@ -31,6 +32,17 @@ export class CheckoutsListComponent implements OnInit{
     this.checkouts$ = this.checkoutService.getCheckouts({
       pageSize: this.currentPageSize,
       pageIndex: this.pageIndex
+    });
+  }
+
+  sortCurrentPage(event: Sort): void {
+    const sortColumn = event.active;
+    const sortDirection = event.direction;
+    this.checkouts$ = this.checkoutService.getCheckouts({
+      pageIndex: this.pageIndex,
+      pageSize: this.currentPageSize,
+      sort: sortColumn,
+      direction: sortDirection
     });
   }
 
