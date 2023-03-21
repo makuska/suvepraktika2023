@@ -18,7 +18,7 @@ import { CheckoutsDetailComponent } from './components/checkouts-detail/checkout
     BooksListComponent,
     BookDetailComponent,
     CheckoutsListComponent,
-    CheckoutsDetailComponent
+    CheckoutsDetailComponent,
   ],
     imports: [
         BrowserModule,

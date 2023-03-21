@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
-import {Page} from "../../models/page";
 import {Checkout} from "../../models/checkout";
 import {CheckoutService} from "../../services/checkout.service";
-import {BookService} from "../../services/book.service";
 import {map, switchMap} from "rxjs/operators";
 import {ActivatedRoute} from "@angular/router";
 
@@ -30,6 +28,7 @@ export class CheckoutsDetailComponent implements OnInit{
     this.checkout$ = this.route.params
       .pipe(map(params => params['id']))
       .pipe(switchMap(id => this.checkoutService.getCheckout(id)))
+    console.log(this.checkout$)
   }
 
 }

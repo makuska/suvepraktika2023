@@ -24,7 +24,8 @@ export class CheckoutService {
 
   getCheckout(checkoutId: string): Observable<Checkout> {
     const url = this.baseUrl + '/getCheckout';
-    const params = new HttpParams().set('checkoutId', checkoutId);
+    const params = new HttpParams().set('checkOutId', checkoutId);
+    console.log(checkoutId);
     return this.http.get<Checkout>(url, {params});
   }
 
@@ -35,7 +36,7 @@ export class CheckoutService {
 
   deleteCheckout(checkoutId: string): Observable<void> {
     const url = this.baseUrl + '/deleteCheckout';
-    const params = new HttpParams().set('checkoutId', checkoutId);
+    const params = new HttpParams().set('checkOutId', checkoutId); //same flaw here :)
     return this.http.delete<void>(url, {params});
   }
 
