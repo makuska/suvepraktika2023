@@ -4,7 +4,7 @@ import { PageRequest } from '../models/page';
 export class RestUtil {
   public static buildParamsFromPageRequest(filter: Partial<PageRequest>): HttpParams {
     // Didn't see/understand this til now...
-    const {pageIndex, pageSize, sort, direction, statusFilter} = filter;
+    const {pageIndex, pageSize, sort, direction, statusFilter, search} = filter;
     // using let and reassigning params, because httpParams is immutable, so .set() returns new object.
     let params = new HttpParams();
     if (pageIndex != null) {
@@ -15,12 +15,17 @@ export class RestUtil {
     }
     if (sort != null) {
       params = params.set('sort', sort + ',' + direction ?? '');
+      //The '??' operator is used to provide a default empty string value in case the 'direction' property is null or undefined.
     }
     if (statusFilter === 'AVAILABLE') {
       params = params.set('sort', 'status,asc');
     }
     if (statusFilter === 'BORROWED') {
       params = params.set('sort', 'status,desc');
+    }
+    if (search != null && search.trim() !== '') {
+      params = params.set('search', search.trim());
+      console.log(search);
     }
     return params;
   }
