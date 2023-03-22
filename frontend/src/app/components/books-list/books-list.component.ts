@@ -27,8 +27,7 @@ export class BooksListComponent implements OnInit {
   ngOnInit(): void {
     // TODO this observable should emit books taking into consideration pagination, sorting and filtering options.
     this.books$ = this.bookService.getBooks({
-      pageSize: this.pageSize,
-      status: this.selectedStatus,
+      // pageSize: this.pageSize,
     });
   }
 
@@ -38,7 +37,7 @@ export class BooksListComponent implements OnInit {
     this.books$ = this.bookService.getBooks({
       pageSize: this.currentPageSize,
       pageIndex: this.pageIndex,
-      status: this.selectedStatus,
+      statusFilter: this.selectedStatus,
       // sortColumn: sortColumn,
       // sortDirection: sortDirection,
     });
@@ -51,18 +50,25 @@ export class BooksListComponent implements OnInit {
       pageIndex: this.pageIndex,
       pageSize: this.currentPageSize,
       sort: sortColumn,
-      direction: sortDirection
+      direction: sortDirection // not working
     });
   }
 
   filterByStatus(status: string): void {
     this.selectedStatus = status;
     this.books$ = this.bookService.getBooks({
-      status: this.selectedStatus,
+      statusFilter: this.selectedStatus,
+      pageIndex: this.pageIndex,
+      pageSize: this.currentPageSize,
     });
-    this.paginator.firstPage();
+    //this.paginator.firstPage();
     console.log("filterByStatus method works, if you see me");
     console.log(status + " check if this works as well")
     console.log(this.books$); // From console, Objects length = 1
   }
+  /*
+  Current Request looks like:
+  GET http://localhost:8080/api/book/getBooks?page=0&size=10
+  No status parameter in the GET request.
+   */
 }

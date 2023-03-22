@@ -17,6 +17,6 @@ export interface PageRequest {
   pageIndex: number;
   pageSize: number;
   sort?: string;
-  status: string;
+  statusFilter: string;
   direction?: SortDirection;
 }
