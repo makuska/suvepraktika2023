@@ -2,6 +2,15 @@
   <mat-card>
     <mat-card-title>Books</mat-card-title>
     <mat-card-content>
+      <mat-form-field>
+        <mat-label>Status</mat-label>
+        <mat-select (selectionChange)="filterByStatus($event.value)">
+          <mat-option [value]="">All</mat-option>
+          <mat-option [value]="'AVAILABLE'">Available</mat-option>
+          <mat-option [value]="'BORROWED'">Borrowed</mat-option>
+        </mat-select>
+      </mat-form-field>
+
       <mat-nav-list *ngIf="(books$ | async) as books">
 <!--        https://material.angular.io/components/sort/overview-->
         <table mat-table [dataSource]="books.content" matSort (matSortChange)="sortCurrentPage($event)"> <!-- must add matSort here!

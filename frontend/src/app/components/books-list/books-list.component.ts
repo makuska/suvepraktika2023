@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BookService } from '../../services/book.service';
-import { Observable } from 'rxjs';
+import {Observable, startWith} from 'rxjs';
 import { Page } from '../../models/page';
 import { Book } from '../../models/book';
 import { PageEvent, MatPaginator } from "@angular/material/paginator";
 import { Sort } from '@angular/material/sort';
+import {map} from "rxjs/operators";
 
 
 @Component({
@@ -20,11 +21,15 @@ export class BooksListComponent implements OnInit {
   pageIndex: number = 0; // Start paging at 0
   currentPageSize: number = this.pageSize;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  selectedStatus = '';
   constructor( private bookService: BookService,) {}
 
   ngOnInit(): void {
     // TODO this observable should emit books taking into consideration pagination, sorting and filtering options.
-    this.books$ = this.bookService.getBooks({pageSize: this.pageSize}); // changing the pageSize, when user enters the "/books" resource
+    this.books$ = this.bookService.getBooks({
+      pageSize: this.pageSize,
+      status: this.selectedStatus,
+    });
   }
 
   changePage(event: PageEvent): void {
@@ -32,7 +37,10 @@ export class BooksListComponent implements OnInit {
     this.currentPageSize = event.pageSize;
     this.books$ = this.bookService.getBooks({
       pageSize: this.currentPageSize,
-      pageIndex: this.pageIndex
+      pageIndex: this.pageIndex,
+      status: this.selectedStatus,
+      // sortColumn: sortColumn,
+      // sortDirection: sortDirection,
     });
   }
 
@@ -47,4 +55,14 @@ export class BooksListComponent implements OnInit {
     });
   }
 
+  filterByStatus(status: string): void {
+    this.selectedStatus = status;
+    this.books$ = this.bookService.getBooks({
+      status: this.selectedStatus,
+    });
+    this.paginator.firstPage();
+    console.log("filterByStatus method works, if you see me");
+    console.log(status + " check if this works as well")
+    console.log(this.books$); // From console, Objects length = 1
+  }
 }
