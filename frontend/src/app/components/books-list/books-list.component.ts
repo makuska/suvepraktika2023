@@ -75,27 +75,38 @@ export class BooksListComponent implements OnInit {
   Couldn't get the searchByTitle method  working properly, so asked ChatAI to fix the method for me.
    */
   searchByTitle(search: string): void {
+    this.paginator.firstPage();
+    this.pageIndex = 0;
     this.search = search;
     if (search) {
       this.books$ = this.bookService.getBooks({
         search: this.search,
         pageIndex: this.pageIndex,
-        pageSize: this.pageSize,
+        pageSize: 1000, //hardcoded 1000, because there are 1000 books.
       }).pipe(
         map((page: Page<Book>) => {
           const filteredBooks = page.content.filter((book: Book) => {
             return book.title.toLowerCase().includes(search.toLowerCase());
           });
+          if (filteredBooks.length === 0) {
+            alert("The " + this.search + " book you searched for doesn't exist!");
+            // location.reload(); Could also force a reload on the application, currently it goes back to the first page.
+            this.books$ = this.bookService.getBooks({
+              pageIndex: this.pageIndex,
+              pageSize: this.pageSize,
+            });
+          }
           return { ...page, content: filteredBooks };
         })
       );
     } else {
+      alert("Please enter a search query");
       this.books$ = this.bookService.getBooks({
         pageIndex: this.pageIndex,
         pageSize: this.pageSize,
       });
     }
+    // this.paginator.firstPage(); // Request needs to be made twice, since it only goes to the first page, and then user
+    // has to search for the book again.
   }
-
-
 }
