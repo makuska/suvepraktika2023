@@ -16,6 +16,8 @@
             'status-available': book.status === 'AVAILABLE' }">{{book.status}}</p> <!--Source: ChatAI-->
         <p>Due Date: {{book.dueDate}}</p>
 <!--        <p>Comment: {{book.comment}}</p> -->
+        <button (click)="deleteThisBook(book)" mat-raised-button color="warn">Delete</button>
+        <button (click)="checkoutThisBook(book)" mat-raised-button>Checkout</button>
       </ng-container>
     </mat-card-content>
   </mat-card>

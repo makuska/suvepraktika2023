@@ -46,12 +46,14 @@ export class BooksListComponent implements OnInit {
   sortCurrentPage(event: Sort): void {
     const sortColumn = event.active;
     const sortDirection = event.direction;
+    console.log(sortDirection);
     this.books$ = this.bookService.getBooks({
       pageIndex: this.pageIndex,
       pageSize: this.currentPageSize,
       sort: sortColumn,
       direction: sortDirection // not working
     });
+    console.log(sortColumn, sortDirection);
   }
 
   filterByStatus(status: string): void {
@@ -83,7 +85,7 @@ export class BooksListComponent implements OnInit {
         search: this.search,
         pageIndex: this.pageIndex,
         pageSize: 1000, //hardcoded 1000, because there are 1000 books.
-      }).pipe(
+      }).pipe( //https://vegibit.com/how-to-make-http-requests-in-angular-using-observables/
         map((page: Page<Book>) => {
           const filteredBooks = page.content.filter((book: Book) => {
             return book.title.toLowerCase().includes(search.toLowerCase());
@@ -110,3 +112,4 @@ export class BooksListComponent implements OnInit {
     // has to search for the book again.
   }
 }
+

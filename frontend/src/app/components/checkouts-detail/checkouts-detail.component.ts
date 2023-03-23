@@ -4,6 +4,7 @@ import {Checkout} from "../../models/checkout";
 import {CheckoutService} from "../../services/checkout.service";
 import {map, switchMap} from "rxjs/operators";
 import {ActivatedRoute} from "@angular/router";
+import {BookService} from "../../services/book.service";
 
 @Component({
   selector: 'app-checkouts-detail',
@@ -21,6 +22,7 @@ export class CheckoutsDetailComponent implements OnInit{
   constructor(
     private route: ActivatedRoute,
     private checkoutService: CheckoutService,
+    private bookService: BookService
   ) {
   }
 
@@ -30,5 +32,12 @@ export class CheckoutsDetailComponent implements OnInit{
       .pipe(switchMap(id => this.checkoutService.getCheckout(id)))
     console.log(this.checkout$)
   }
+  returnThisCheckout(checkout: Checkout): void{
+    const book = checkout.borrowedBook;
+    // deleting the book from
+    this.bookService.deleteBook(book.id);
+    this.bookService.saveBook(book);
+  }
+
 
 }

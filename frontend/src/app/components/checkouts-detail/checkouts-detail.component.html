@@ -11,6 +11,7 @@
         <p>Genre: {{checkout.borrowedBook.genre}}</p>
         <p>Checkout Date: {{checkout.checkedOutDate}}</p>
         <p>Due Date: {{checkout.dueDate}}</p>
+        <button (click)="returnThisCheckout(checkout)" mat-raised-button>Checkout</button>
       </ng-container>
     </mat-card-content>
   </mat-card>

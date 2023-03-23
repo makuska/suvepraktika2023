@@ -31,16 +31,6 @@ public class BookController {
         return ResponseEntity.ok(bookService.getBook(bookId));
     }
 
-//    @GetMapping("/getBooks")
-//    public ResponseEntity<Page<BookDTO>> getBooksByTitle(@RequestParam(value = "bookTitle") String title) {
-//        Page<BookDTO> matchingBooks = bookService.getBooksByTitle(title);
-//        if (matchingBooks.isEmpty()) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        return ResponseEntity.ok(matchingBooks);
-//    }
-
-
     @PostMapping("/saveBook")
     public ResponseEntity<String> saveBook(@RequestBody BookDTO book) {
         return ResponseEntity.ok(String.valueOf(bookService.saveBook(book)));
@@ -51,6 +41,7 @@ public class BookController {
         bookService.deleteBook(bookId);
         return ResponseEntity.ok("");
     }
+
 
     // At the moment I think the search implementation needs a new endpoint.
 //    @GetMapping("/search")

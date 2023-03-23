@@ -38,12 +38,4 @@ export class BookService {
     return this.http.delete<void>(url, {params});
   }
 
-  // getBooksByTitle(filter: Partial<PageRequest>): Observable<Page<Book>> {
-  //   const url = this.baseUrl + '/getBooks';
-  //   const params = new HttpParams().set('bookTitle', title);
-  //   return this.http.get<Book>(url, {params});
-  // }
-
-
-
 }
