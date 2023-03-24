@@ -35,10 +35,27 @@ export class CheckoutsDetailComponent implements OnInit{
 
   // Method also needs: 'borrower_first_name', 'borrower_last_name'.
   returnThisCheckout(checkout: Checkout): void{
+    // I feel like this could be done more efficiently, since currently I'm constructing a new object, but...
     const book = checkout.borrowedBook;
-    // deleting the book from
-    this.bookService.deleteBook(book.id);
-    this.bookService.saveBook(book);
+    book.id = checkout.borrowedBook.id;
+    book.title = checkout.borrowedBook.title;
+    book.author = checkout.borrowedBook.author;
+    book.genre = checkout.borrowedBook.genre;
+    book.year = checkout.borrowedBook.year;
+    book.added = checkout.borrowedBook.added;
+    book.status = 'AVAILABLE';
+    book.dueDate = null; // database has null values for 'AVAILABLE' books tho?
+    console.log(book);
+    /*Object { id: "fc80bbda-18f8-4695-af8f-6044dbbe9ce2", title: "The Far-Distant Oxus", author: "Larry Rath", genre: "Fanfiction",
+    year: 1957, added: "2006-04-16", checkOutCount: 3, status: "AVAILABLE", dueDate: null, comment: null }
+    */
+    this.bookService.saveBook(book).subscribe(() => {
+      console.log('Book saved successfully!');
+    }); // 404 ERROR..
+    //
+    this.checkoutService.deleteCheckout(checkout.id).subscribe(() => {
+      console.log('Checkout deleted successfully!');
+    }); // status 200
   }
 
 

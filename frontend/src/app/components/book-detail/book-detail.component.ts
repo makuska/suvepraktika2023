@@ -62,8 +62,8 @@ export class BookDetailComponent implements OnInit {
         checkoutDate.setDate(checkoutDate.getDate() + 60); // kinda long...
         book.dueDate = checkoutDate.toString().substring(0, 10); // 'yyyy-mm-dd'
         // Now changing the checkout properties
-        // THIS IS NOT WORKING!!!
-        const checkout: Checkout = { //creating a new checkout object
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+        const checkout: Checkout = Object.assign({}, book, {
           id: book.id,
           borrowerFirstName: this.borrowerFirstName,
           borrowerLastName: this.borrowerLastName,
@@ -71,7 +71,7 @@ export class BookDetailComponent implements OnInit {
           // https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd
           checkedOutDate: new Date().toISOString().split('T')[0],
           dueDate: checkoutDate.toString().substring(0, 10)
-        };
+        });
         this.checkoutService.saveCheckout(checkout);
         // subscribe() method is used because it needs to wait for the response from the server after the HTTP POST request is made.
         this.bookService.saveBook(book).subscribe(() => {
@@ -89,12 +89,6 @@ export class BookDetailComponent implements OnInit {
   The book object is being modified directly in the checkoutThisBook method, and then passed to the bookService.saveBook method.
   It is generally not a good idea to modify objects directly like this, especially if they are being passed to a service.
   Instead, you should create a copy of the book object and modify that copy.
-
-  The dueDate property of the book object is being set to a string, but it looks like it is expecting a Date object.
-  You should make sure that the data types match between the client and server.
-
-  The checkout object is being created with an id property that is the same as the book.id property. This might be
-  causing an issue if the API is expecting a different value for the id field.
 */
 
 }
