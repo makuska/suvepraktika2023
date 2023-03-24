@@ -1,10 +1,12 @@
 package com.cgi.library.controller;
 
+import com.cgi.library.entity.CheckOut;
 import com.cgi.library.model.CheckOutDTO;
 import com.cgi.library.service.CheckOutService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +38,8 @@ public class CheckOutController {
     public ResponseEntity<CheckOutDTO> getCheckOut(@RequestParam(value = "checkOutId") UUID checkOutId) {
         return ResponseEntity.ok(checkOutService.getCheckOut(checkOutId));
     }
+    // Should add an exception
+    //https://www.codecademy.com/paths/create-rest-apis-with-spring-and-java
 
     @PostMapping(value = "checkout")
     public ResponseEntity<String> saveCheckOut(@RequestBody CheckOutDTO checkOutDTO) {

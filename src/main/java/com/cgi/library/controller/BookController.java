@@ -41,15 +41,4 @@ public class BookController {
         bookService.deleteBook(bookId);
         return ResponseEntity.ok("");
     }
-
-
-    // At the moment I think the search implementation needs a new endpoint.
-//    @GetMapping("/search")
-//    public Page<Book> searchBooksByTitle(
-//            @RequestParam(value = "title") String title,
-//            @RequestParam(value = "page", defaultValue = "0") int page,
-//            @RequestParam(value = "size", defaultValue = "10") int size
-//    ) {
-//        return bookService.searchBooksByTitle(title, page, size);
-//    }
 }

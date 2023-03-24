@@ -32,6 +32,8 @@ export class CheckoutsDetailComponent implements OnInit{
       .pipe(switchMap(id => this.checkoutService.getCheckout(id)))
     console.log(this.checkout$)
   }
+
+  // Method also needs: 'borrower_first_name', 'borrower_last_name'.
   returnThisCheckout(checkout: Checkout): void{
     const book = checkout.borrowedBook;
     // deleting the book from

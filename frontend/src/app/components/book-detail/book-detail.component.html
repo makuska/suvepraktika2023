@@ -17,7 +17,15 @@
         <p>Due Date: {{book.dueDate}}</p>
 <!--        <p>Comment: {{book.comment}}</p> -->
         <button (click)="deleteThisBook(book)" mat-raised-button color="warn">Delete</button>
-        <button (click)="checkoutThisBook(book)" mat-raised-button>Checkout</button>
+        <div *ngIf="book.status === 'AVAILABLE'">
+          <mat-form-field>
+            <input matInput [(ngModel)]="borrowerFirstName" placeholder="Enter your first name" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput [(ngModel)]="borrowerLastName" placeholder="Enter your last name" required>
+          </mat-form-field>
+          <button (click)="checkoutThisBook(book)" mat-raised-button>Checkout</button>
+        </div>
       </ng-container>
     </mat-card-content>
   </mat-card>
