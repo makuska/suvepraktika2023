@@ -5,6 +5,7 @@ import {CheckoutService} from "../../services/checkout.service";
 import {map, switchMap} from "rxjs/operators";
 import {ActivatedRoute} from "@angular/router";
 import {BookService} from "../../services/book.service";
+import {Book} from "../../models/book";
 
 @Component({
   selector: 'app-checkouts-detail',
@@ -35,27 +36,36 @@ export class CheckoutsDetailComponent implements OnInit{
 
   // Method also needs: 'borrower_first_name', 'borrower_last_name'.
   returnThisCheckout(checkout: Checkout): void{
-    // I feel like this could be done more efficiently, since currently I'm constructing a new object, but...
+    // EDIT: logic flaw, here I'm creating a new book object, which is completely unnecessary, since I only need to update
+    // the status of the book and set dueDate to null;
+    // const book: Book = Object.assign({}, checkout, {
+    //   id: checkout.borrowedBook.id,
+    //   title: checkout.borrowedBook.title,
+    //   author: checkout.borrowedBook.author,
+    //   genre: checkout.borrowedBook.genre,
+    //   year: checkout.borrowedBook.year,
+    //   added: checkout.borrowedBook.added,
+    //   status: 'AVAILABLE',
+    //   dueDate: null // database has null values for 'AVAILABLE' books tho?
+    // });
+    // USING Object.assign results in Book AND Checkout object being created!
+    /*Object { id: "fc80bbda-18f8-4695-af8f-6044dbbe9ce2", borrowerFirstName: "John", borrowerLastName: "Gusikowski",
+    borrowedBook: {…}, checkedOutDate: "2020-09-11", dueDate: null, returnedDate: null, title: "The Far-Distant Oxus",
+    author: "Larry Rath", genre: "Fanfiction", … }*/
     const book = checkout.borrowedBook;
-    book.id = checkout.borrowedBook.id;
-    book.title = checkout.borrowedBook.title;
-    book.author = checkout.borrowedBook.author;
-    book.genre = checkout.borrowedBook.genre;
-    book.year = checkout.borrowedBook.year;
-    book.added = checkout.borrowedBook.added;
     book.status = 'AVAILABLE';
     book.dueDate = null; // database has null values for 'AVAILABLE' books tho?
     console.log(book);
     /*Object { id: "fc80bbda-18f8-4695-af8f-6044dbbe9ce2", title: "The Far-Distant Oxus", author: "Larry Rath", genre: "Fanfiction",
-    year: 1957, added: "2006-04-16", checkOutCount: 3, status: "AVAILABLE", dueDate: null, comment: null }
-    */
-    this.bookService.saveBook(book).subscribe(() => {
-      console.log('Book saved successfully!');
-    }); // 404 ERROR..
+    year: 1957, added: "2006-04-16", checkOutCount: 3, status: "AVAILABLE", dueDate: null, comment: null }*/
+    this.bookService.deleteBook(book.id).subscribe(() => console.log("Updating book details"));
+    this.bookService.saveBook(book).subscribe(() => console.log('Book saved successfully!')); // 200
+    /* SyntaxError: JSON.parse: unexpected non-whitespace character after JSON data at line 1 column 2 of the JSON data
+    text: "5fce2622-6217-4eed-8d1c-d255bae1c73e" */
     //
     this.checkoutService.deleteCheckout(checkout.id).subscribe(() => {
       console.log('Checkout deleted successfully!');
-    }); // status 200
+    }); // 404
   }
 
 

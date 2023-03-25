@@ -26,17 +26,17 @@ public class BookController {
         return ResponseEntity.ok(bookService.getBooks(pageable)); //https://www.baeldung.com/spring-response-entity
     }
 
-    @GetMapping("/getBook")
+    @GetMapping("/getBook") // Working
     public ResponseEntity<BookDTO> getBook(@RequestParam(value = "bookId") UUID bookId) {
         return ResponseEntity.ok(bookService.getBook(bookId));
     }
 
-    @PostMapping("/saveBook")
+    @PostMapping("/saveBook") // Not working for checking out a book (works when returning a book)
     public ResponseEntity<String> saveBook(@RequestBody BookDTO book) {
         return ResponseEntity.ok(String.valueOf(bookService.saveBook(book)));
     }
 
-    @DeleteMapping("/deleteBook")
+    @DeleteMapping("/deleteBook") // Working
     public ResponseEntity<String> deleteBook(@RequestParam(value = "bookId") UUID bookId) {
         bookService.deleteBook(bookId);
         return ResponseEntity.ok("");

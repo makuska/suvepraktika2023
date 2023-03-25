@@ -34,8 +34,8 @@ export class CheckoutService {
   }
 
   deleteCheckout(checkoutId: string): Observable<void> {
-    const url = this.baseUrl + '/deleteCheckout';
-    const params = new HttpParams().set('checkOutId', checkoutId); //same flaw here :)
+    const url = this.baseUrl + '/deleteCheckout'; // if '/checkout' is used then it works
+    const params = new HttpParams().set('checkOutId', checkoutId);
     return this.http.delete<void>(url, {params});
   }
 

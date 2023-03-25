@@ -14,8 +14,11 @@
 <!--        <p id="colored-status">Status: </p>-->
         <p [ngClass]="{ 'status-borrowed': book.status === 'BORROWED',
             'status-available': book.status === 'AVAILABLE' }">{{book.status}}</p> <!--Source: ChatAI-->
-        <p>Due Date: {{book.dueDate}}</p>
-<!--        <p>Comment: {{book.comment}}</p> -->
+        <p *ngIf="book.status !== 'AVAILABLE'">Due Date: {{book.dueDate}}</p> <!--No need to display the Due Date, if book is available-->
+        <p>Comment:
+          <ng-container *ngIf="book.comment; else noComment">{{book.comment}}</ng-container>
+          <ng-template #noComment>"Book has no comments"</ng-template>
+        </p>
         <button (click)="deleteThisBook(book)" mat-raised-button color="warn">Delete</button>
         <div *ngIf="book.status === 'AVAILABLE'">
           <mat-form-field>

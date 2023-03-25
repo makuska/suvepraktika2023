@@ -34,14 +34,17 @@ export class BookDetailComponent implements OnInit {
       .pipe(switchMap(id => this.bookService.getBook(id)))
   }
 
+  // TODO redirect user to Library/Checkouts after action
+
   // https://www.w3schools.com/jsref/met_win_confirm.asp
   deleteThisBook(book: Book): void{
     if (confirm("Do you want to delete the '" + book.title + "' book?")){
       console.log(book.id);
       console.log(this.bookService.getBook('ab1a8f87-272d-4ba0-93df-dbb8952909df'));
       this.bookService.deleteBook(book.id).subscribe(() => {
+        alert("Book deleted successfully!");
         window.location.reload();
-      })
+      }) //Backend needs to throw an exception if id doesn't exist (currently it deletes the book and then sends a 500 error)
     }
   }
   /*
@@ -51,7 +54,7 @@ export class BookDetailComponent implements OnInit {
 
   // Might need to add hover css, so that the button indicates that the book is unavailable for checkout.
   // Or add an if statement, if (book.status === 'BORROWED' && click()) then; alert user (can't checkout borrowed books) and reload?
-  checkoutThisBook(book: Book): void {
+  checkoutThisBook(book: Book): void { //
     // Implement the name check for !empty values
     if (book.status === 'AVAILABLE') {
       // The confirm() method returns true if the user clicked "OK", otherwise false.
@@ -61,9 +64,9 @@ export class BookDetailComponent implements OnInit {
         let checkoutDate = new Date();
         checkoutDate.setDate(checkoutDate.getDate() + 60); // kinda long...
         book.dueDate = checkoutDate.toString().substring(0, 10); // 'yyyy-mm-dd'
-        // Now changing the checkout properties
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
-        const checkout: Checkout = Object.assign({}, book, {
+
+        // this.bookService.deleteBook(book.id).subscribe(() => console.log("Temp delete")); // Working
+        const checkout: Checkout = {
           id: book.id,
           borrowerFirstName: this.borrowerFirstName,
           borrowerLastName: this.borrowerLastName,
@@ -71,8 +74,21 @@ export class BookDetailComponent implements OnInit {
           // https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd
           checkedOutDate: new Date().toISOString().split('T')[0],
           dueDate: checkoutDate.toString().substring(0, 10)
-        });
-        this.checkoutService.saveCheckout(checkout);
+        }
+        // Now changing the checkout properties
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+        // const checkout: Checkout = Object.assign({}, book, {
+        //   id: book.id,
+        //   borrowerFirstName: this.borrowerFirstName,
+        //   borrowerLastName: this.borrowerLastName,
+        //   borrowedBook: book,
+        //   // https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd
+        //   checkedOutDate: new Date().toISOString().split('T')[0],
+        //   dueDate: checkoutDate.toString().substring(0, 10)
+        // });
+        console.log(book);
+        console.log(checkout);
+        this.checkoutService.saveCheckout(checkout).subscribe(() => console.log("Checkout saved!"));
         // subscribe() method is used because it needs to wait for the response from the server after the HTTP POST request is made.
         this.bookService.saveBook(book).subscribe(() => {
           // Reload the book details to update the status (From 'AVAILABLE' to 'BORROWED')
@@ -80,6 +96,7 @@ export class BookDetailComponent implements OnInit {
           This is because ngOnInit() is a lifecycle hook in Angular that is called after the component is initialized,
           and it is commonly used to perform initialization tasks such as fetching data and updating the view. */
           this.ngOnInit(); //https://stackoverflow.com/questions/35763730/difference-between-constructor-and-ngoninit
+          console.log("Book updated/saved"!);
         });
       }
     }
