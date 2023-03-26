@@ -3,7 +3,7 @@ import {Observable} from "rxjs";
 import {Checkout} from "../../models/checkout";
 import {CheckoutService} from "../../services/checkout.service";
 import {map, switchMap} from "rxjs/operators";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {BookService} from "../../services/book.service";
 import {Book} from "../../models/book";
 
@@ -23,7 +23,8 @@ export class CheckoutsDetailComponent implements OnInit{
   constructor(
     private route: ActivatedRoute,
     private checkoutService: CheckoutService,
-    private bookService: BookService
+    private bookService: BookService,
+    private router: Router,
   ) {
   }
 
@@ -34,6 +35,9 @@ export class CheckoutsDetailComponent implements OnInit{
     console.log(this.checkout$)
   }
 
+  // TODO DEBUGGING!!!
+  // https://gist.github.com/makuska/84457e0b6f614301b14575aaeaa0d917#endpoint-debugging
+
   returnThisCheckout(checkout: Checkout): void{
     /*Object { id: "fc80bbda-18f8-4695-af8f-6044dbbe9ce2", borrowerFirstName: "John", borrowerLastName: "Gusikowski",
     borrowedBook: {…}, checkedOutDate: "2020-09-11", dueDate: null, returnedDate: null, title: "The Far-Distant Oxus",
@@ -42,11 +46,14 @@ export class CheckoutsDetailComponent implements OnInit{
     book.status = 'AVAILABLE';
     book.dueDate = null; // database has null values for 'AVAILABLE' books tho?
     console.log(book);
-    this.bookService.deleteBook(book.id).subscribe(() => console.log("Updating book details"));
+    // this.bookService.deleteBook(book.id).subscribe(() => console.log("Updating book details"));
     this.bookService.saveBook(book).subscribe(() => console.log('Book saved successfully!')); // 200
     this.checkoutService.deleteCheckout(checkout.id).subscribe(() => {
       console.log('Checkout deleted successfully!');
-    }); // 404
+      alert("Book returned successfully!");
+      this.router.navigate(["/checkouts"]);
+      // Should force a reload on the /books:id route, when book is returned?
+    }); // 200
   }
 
 
