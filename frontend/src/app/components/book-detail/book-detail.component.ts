@@ -53,7 +53,7 @@ export class BookDetailComponent implements OnInit {
   */
 
   // Might need to add hover css, so that the button indicates that the book is unavailable for checkout.
-  // Or add an if statement, if (book.status === 'BORROWED' && click()) then; alert user (can't checkout borrowed books) and reload?
+  // TODO check if user has filled the first and last name
   checkoutThisBook(book: Book): void { //
     // Implement the name check for !empty values
     if (book.status === 'AVAILABLE') {
@@ -75,17 +75,6 @@ export class BookDetailComponent implements OnInit {
           checkedOutDate: new Date().toISOString().split('T')[0],
           dueDate: checkoutDate.toString().substring(0, 10)
         }
-        // Now changing the checkout properties
-        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
-        // const checkout: Checkout = Object.assign({}, book, {
-        //   id: book.id,
-        //   borrowerFirstName: this.borrowerFirstName,
-        //   borrowerLastName: this.borrowerLastName,
-        //   borrowedBook: book,
-        //   // https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd
-        //   checkedOutDate: new Date().toISOString().split('T')[0],
-        //   dueDate: checkoutDate.toString().substring(0, 10)
-        // });
         console.log(book);
         console.log(checkout);
         this.checkoutService.saveCheckout(checkout).subscribe(() => console.log("Checkout saved!"));
@@ -101,11 +90,5 @@ export class BookDetailComponent implements OnInit {
       }
     }
   } //400 ERROR:
-  // Some things to consider:
-  /*However, there are a few things that I noticed in the code that could be causing problems:
-  The book object is being modified directly in the checkoutThisBook method, and then passed to the bookService.saveBook method.
-  It is generally not a good idea to modify objects directly like this, especially if they are being passed to a service.
-  Instead, you should create a copy of the book object and modify that copy.
-*/
 
 }

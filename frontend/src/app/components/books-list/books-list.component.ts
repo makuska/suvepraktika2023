@@ -111,5 +111,21 @@ export class BooksListComponent implements OnInit {
     // this.paginator.firstPage(); // Request needs to be made twice, since it only goes to the first page, and then user
     // has to search for the book again.
   }
+
+  isFavourite(book: Book): boolean {
+    const favouriteBooks = this.bookService.getFavouriteBooks();
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some
+    // 'b' represents each element of the 'favouriteBooks' array.
+    return favouriteBooks.some(b => b.id === book.id); // Source: ChatAI
+  }
+
+  toggleFavourite(book: Book): void {
+    if (this.isFavourite(book)) {
+      this.bookService.removeFavouriteBook(book);
+    } else {
+      this.bookService.addBookToFavourites(book);
+    }
+  }
+
 }
 

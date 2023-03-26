@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from "@angular/forms";
 import { CheckoutsListComponent } from './components/checkouts-list/checkouts-list.component';
 import { CheckoutsDetailComponent } from './components/checkouts-detail/checkouts-detail.component';
+import { FavouriteBooksComponent } from './components/favourite-books/favourite-books.component';
 // import { MatSortModule } from "@angular/material/sort";
 
 @NgModule({
@@ -20,6 +21,7 @@ import { CheckoutsDetailComponent } from './components/checkouts-detail/checkout
     BookDetailComponent,
     CheckoutsListComponent,
     CheckoutsDetailComponent,
+    FavouriteBooksComponent,
   ],
     imports: [
         BrowserModule,

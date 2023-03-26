@@ -1,0 +1,5 @@
+<h2>My Favourite Books:</h2>
+<ul>
+  <li *ngFor="let book of favourites"><a [routerLink]="['/books', book.id]">{{book.title}}</a></li>
+<!--  <td mat-cell *matCellDef="let book"><a [routerLink]="['/books', book.id]">{{book.title}}</a></td>-->
+</ul>
