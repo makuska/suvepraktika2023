@@ -77,6 +77,13 @@ export class BooksListComponent implements OnInit {
   Couldn't get the searchByTitle method  working properly, so asked ChatAI to fix the method for me.
    */
   searchByTitle(search: string): void {
+    if(!this.bookService.isValidInput(search)){
+      alert("Please enter characters and spaces only!");
+      this.books$ = this.bookService.getBooks({
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize,
+      });
+    }
     this.paginator.firstPage();
     this.pageIndex = 0;
     this.search = search;

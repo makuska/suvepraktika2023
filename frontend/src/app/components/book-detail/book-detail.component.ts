@@ -57,6 +57,14 @@ export class BookDetailComponent implements OnInit {
   checkoutThisBook(book: Book): void { //
     // Implement the name check for !empty values
     if (book.status === 'AVAILABLE') {
+      if (!this.bookService.isValidInput(this.borrowerFirstName)) {
+        alert('Invalid first name. Special characters are not allowed.');
+        return;
+      }
+      if (!this.bookService.isValidInput(this.borrowerLastName)) {
+        alert('Invalid last name. Special characters are not allowed.');
+        return;
+      }
       // The confirm() method returns true if the user clicked "OK", otherwise false.
       if (confirm("Do you want to check out '" + book.title + "'?")) {
         book.status = 'BORROWED';
