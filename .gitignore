@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+librarydb_test.trace.db
+new_file.trace.db
