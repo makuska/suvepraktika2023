@@ -29,7 +29,7 @@ export class CheckoutService {
   }
 
   saveCheckout(checkoutId: Checkout): Observable<void> {
-    const url = this.baseUrl + '/saveCheckout';
+    const url = this.baseUrl + '/checkout'; // weirdly doesn't work with "/saveCheckout"
     return this.http.post<void>(url, checkoutId);
   }
 
@@ -38,5 +38,26 @@ export class CheckoutService {
     const params = new HttpParams().set('checkOutId', checkoutId);
     return this.http.delete<void>(url, {params});
   }
+
+  generateRandomString(): string {
+    const groups = [
+      this.generateRandomGroup(8),
+      this.generateRandomGroup(4),
+      this.generateRandomGroup(4),
+      this.generateRandomGroup(4),
+      this.generateRandomGroup(12),
+    ];
+    return groups.join("-");
+  }
+
+  generateRandomGroup(length: number): string {
+    const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+  }
+
 
 }

@@ -78,13 +78,13 @@ export class BookDetailComponent implements OnInit {
 
         // this.bookService.deleteBook(book.id).subscribe(() => console.log("Temp delete")); // Working
         const checkout: Checkout = {
-          id: book.id,
+          id: this.checkoutService.generateRandomString(), //doesn't work, most likely because db isn't running
           borrowerFirstName: this.borrowerFirstName,
           borrowerLastName: this.borrowerLastName,
           borrowedBook: book,
           // https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd
           checkedOutDate: new Date().toISOString().split('T')[0],
-          dueDate: checkoutDate.toString().substring(0, 10)
+          dueDate: checkoutDate.toISOString().substring(0, 10)
         }
         console.log(book);
         console.log(checkout);
