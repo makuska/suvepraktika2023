@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BookService } from '../../services/book.service';
 import {Observable, startWith} from 'rxjs';
-import { Page } from '../../models/page';
+import {Page, PageRequest, SortDirection} from '../../models/page';
 import { Book } from '../../models/book';
 import { PageEvent, MatPaginator } from "@angular/material/paginator";
-import { Sort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import {map} from "rxjs/operators";
 
 @Component({
@@ -19,10 +19,14 @@ export class BooksListComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageIndex: number = 0; // Start paging at 0
   currentPageSize: number = this.pageSize;
+  totalElements: number = 1000;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   selectedStatus = '';
   search = '';
-  constructor( private bookService: BookService,) {}
+  sortColumn?: string;
+  sortDirection?: SortDirection;
+  // @ViewChild(MatSort) sort: MatSort;
+  constructor( private bookService: BookService, ) {}
 
   ngOnInit(): void {
     // TODO this observable should emit books taking into consideration pagination, sorting and filtering options.
@@ -43,17 +47,36 @@ export class BooksListComponent implements OnInit {
     });
   }
 
+  // An updated version of the sort, the angular MatSort seemed tricky, used other logic here, passing either
+  // 'asc', 'desc' or an empty string to url.
   sortCurrentPage(event: Sort): void {
     const sortColumn = event.active;
-    const sortDirection = event.direction;
-    console.log(sortDirection);
+
+    // If the same column is clicked for the third time, clear the sort
+    if (this.sortColumn === sortColumn) {
+      if (this.sortDirection === 'asc') {
+        this.sortDirection = 'desc';
+      } else if (this.sortDirection === 'desc') {
+        this.sortColumn = '';
+        this.sortDirection = '';
+      } else {
+        this.sortDirection = 'asc';
+      }
+    } else {
+      // Setting the initial sort to ascending
+      this.sortColumn = sortColumn;
+      this.sortDirection = 'asc';
+    }
+
+    // if sortColumn is an empty string, then 'undefined' is returned, otherwise this.sortColumn is returned.
+    const sort = this.sortColumn === '' ? undefined : this.sortColumn;
     this.books$ = this.bookService.getBooks({
       pageIndex: this.pageIndex,
       pageSize: this.currentPageSize,
-      sort: sortColumn,
-      direction: sortDirection // not working
+      sort: sort,
+      direction: this.sortDirection
     });
-    console.log(sortColumn, sortDirection);
+    console.log(sortColumn, this.sortDirection);
   }
 
   filterByStatus(status: string): void {
@@ -91,7 +114,7 @@ export class BooksListComponent implements OnInit {
       this.books$ = this.bookService.getBooks({
         search: this.search,
         pageIndex: this.pageIndex,
-        pageSize: 1000, //hardcoded 1000, because there are 1000 books.
+        pageSize: this.totalElements, //hardcoded 1000, because there are 1000 books.
       }).pipe( //https://vegibit.com/how-to-make-http-requests-in-angular-using-observables/
         map((page: Page<Book>) => {
           const filteredBooks = page.content.filter((book: Book) => {
@@ -135,4 +158,3 @@ export class BooksListComponent implements OnInit {
   }
 
 }
-
