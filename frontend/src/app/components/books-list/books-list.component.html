@@ -52,17 +52,17 @@
           </ng-container>
 
           <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef >Status</th>
+            <th mat-header-cell *matHeaderCellDef>Status</th>
             <td mat-cell *matCellDef="let book" [ngClass]="{ 'status-borrowed': book.status === 'BORROWED',
             'status-available': book.status === 'AVAILABLE' }">{{book.status}}</td> <!-- ChatAI -->
           </ng-container>
 
           <ng-container matColumnDef="favourite">
-            <th mat-header-cell *matHeaderCellDef></th>
+            <th mat-header-cell *matHeaderCellDef>Favourite</th>
             <td mat-cell *matCellDef="let book">
               <button mat-icon-button (click)="toggleFavourite(book)">
-                <mat-icon [style.color]="book.favourite ? 'red!important' : 'black'"> <!-- color doesn't change when book is favourite somehow -->
-                  {{book.favourite ? 'favorite' : 'favorite_border'}}
+                <mat-icon [ngClass]="{'favorite-icon': isFavourite(book)}"> <!-- if book is favourite, then [ngClass] binds the 'favourite-icon' css class -->
+                  {{isFavourite(book) ? 'favorite' : 'favorite_border'}}
                 </mat-icon>
               </button>
             </td>
