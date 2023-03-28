@@ -20,6 +20,7 @@ export class CheckoutsDetailComponent implements OnInit{
    */
   checkout$!: Observable<Checkout>;
 
+
   constructor(
     private route: ActivatedRoute,
     private checkoutService: CheckoutService,
@@ -28,11 +29,31 @@ export class CheckoutsDetailComponent implements OnInit{
   ) {
   }
 
+  changeDueDateText(checkout: Checkout){
+    const isOverDue = this.checkoutService.isOverDue(checkout);
+    if (isOverDue) {
+      return {
+        'color': 'red',
+        'opacity': '0.5',
+        'font-weight': 'bold',
+      };
+    } else {
+      return {
+        'color': 'inherit',
+        'opacity': '1',
+        'font-weight': 'normal',
+      };
+    }
+  }
+
+
+
   ngOnInit(): void {
     this.checkout$ = this.route.params
       .pipe(map(params => params['id']))
       .pipe(switchMap(id => this.checkoutService.getCheckout(id)))
     console.log(this.checkout$)
+
   }
 
   // TODO DEBUGGING!!!

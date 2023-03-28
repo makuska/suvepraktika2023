@@ -10,7 +10,8 @@
         <p>Year of publication: {{checkout.borrowedBook.year}}</p>
         <p>Genre: {{checkout.borrowedBook.genre}}</p>
         <p>Checkout Date: {{checkout.checkedOutDate}}</p>
-        <p>Due Date: {{checkout.dueDate}}</p>
+        <p>Due Date: <span [ngStyle]="changeDueDateText(checkout)">{{checkout.dueDate | date}}</span></p>
+        <p *ngIf="changeDueDateText(checkout)['color'] === 'red'" style="color: red; font-size: larger">OVERDUE!</p>
         <button (click)="returnThisCheckout(checkout)" mat-raised-button>Return book</button>
       </ng-container>
     </mat-card-content>

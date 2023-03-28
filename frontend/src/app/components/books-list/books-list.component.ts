@@ -42,8 +42,8 @@ export class BooksListComponent implements OnInit {
       pageSize: this.currentPageSize,
       pageIndex: this.pageIndex,
       statusFilter: this.selectedStatus,
-      // sortColumn: sortColumn,
-      // sortDirection: sortDirection,
+      sort: this.sortColumn, // Sort is now working with paging as well
+      direction: this.sortDirection
     });
   }
 

@@ -70,17 +70,13 @@ export class CheckoutsListComponent implements OnInit{
     console.log(sortColumn, this.sortDirection);
   }
 
-  isOverDue(checkout: Checkout): boolean {
-    const today = new Date();
-    let dateString = checkout.dueDate;
-    let year = dateString.substring(0, 4);
-    let month = dateString.substring(5, 7);
-    let day = dateString.substring(8, 10);
-
-    let date = new Date(parseInt(year), parseInt(month)-1, parseInt(day));
-    console.log(date);
-
-    return date > today;
+  getOverDueStyle(checkout: Checkout) {
+    const isOverDue = this.checkoutService.isOverDue(checkout);
+    return {
+      'color': isOverDue ? 'red' : 'inherit',
+      'opacity': isOverDue ? '0.5' : '1',
+      'font-weight': isOverDue ? 'bold' : 'normal',
+    };
   }
 
 }

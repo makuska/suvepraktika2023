@@ -15,7 +15,6 @@ export class CheckoutService {
   private readonly baseUrl = environment.backendUrl + '/api/checkout';
 
   constructor( private http: HttpClient,) {}
-  // Changed only the necessary method names and paths
   getCheckouts(filter: Partial<PageRequest>): Observable<Page<Checkout>> {
     const url = this.baseUrl + '/getCheckouts';
     const params = RestUtil.buildParamsFromPageRequest(filter);
@@ -37,6 +36,21 @@ export class CheckoutService {
     const url = this.baseUrl + '/checkout'; // if '/checkout' is used then it works
     const params = new HttpParams().set('checkOutId', checkoutId);
     return this.http.delete<void>(url, {params});
+  }
+
+  isOverDue(checkout: Checkout): boolean {
+    if (!checkout.dueDate) {
+      return false;
+    }
+    const today = new Date();
+    let dateToString = checkout.dueDate;
+    let year = dateToString.substring(0, 4);
+    let month = dateToString.substring(5, 7);
+    let day = dateToString.substring(8, 10);
+
+    let date = new Date(parseInt(year), parseInt(month)-1, parseInt(day));
+
+    return date < today;
   }
 
 }

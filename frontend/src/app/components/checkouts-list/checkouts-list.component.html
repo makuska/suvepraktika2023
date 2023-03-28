@@ -34,10 +34,8 @@
 
           <ng-container matColumnDef="dueDate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Due Date</th>
-            <td mat-cell *matCellDef="let checkout" [ngClass]="{'overdue': isOverDue(checkout.dueDate)}">
-              {{checkout.dueDate}}</td>
+            <td mat-cell *matCellDef="let checkout" [ngStyle]="getOverDueStyle(checkout)">{{checkout.dueDate}}</td>
           </ng-container>
-
 
           <tr mat-header-row *matHeaderRowDef="['borrower', 'title', 'author', 'year', 'checkoutDate', 'dueDate']"></tr>
           <tr mat-row *matRowDef="let checkout; columns: ['borrower', 'title', 'author', 'year', 'checkoutDate', 'dueDate']"></tr>
