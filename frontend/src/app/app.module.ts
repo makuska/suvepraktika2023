@@ -30,7 +30,6 @@ import { FavouriteBooksComponent } from './components/favourite-books/favourite-
         BrowserAnimationsModule,
         MaterialModule,
         FormsModule,
-        // MatSortModule
     ],
   providers: [],
   bootstrap: [AppComponent]

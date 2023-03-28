@@ -14,7 +14,6 @@ import {CheckoutService} from "../../services/checkout.service";
 })
 export class BookDetailComponent implements OnInit {
   book$!: Observable<Book>;
-  // book: Book | undefined; // no constructor, hence why undefined
   borrowerFirstName: string = '';
   borrowerLastName: string = '';
 
@@ -43,19 +42,15 @@ export class BookDetailComponent implements OnInit {
         return;
       }
       console.log(book.id);
-      console.log(this.bookService.getBook('ab1a8f87-272d-4ba0-93df-dbb8952909df'));
       this.bookService.deleteBook(book.id).subscribe(() => {
         alert("Book deleted successfully!");
         // window.location.reload();
         // https://stackoverflow.com/questions/38131293/angular-2-router-navigate
         this.router.navigate(["/books"]); // ROuting user back to "/books"
-      }) //Backend needs to throw an exception if id doesn't exist (currently it deletes the book and then sends a 500 error)
+      }) //Backend needs to throw an exception if id doesn't exist
     }
   }
 
-  // Might need to add hover css, so that the button indicates that the book is unavailable for checkout.
-  // TODO check if user has filled the first and last name
-  // TODO this method is way too long
   checkoutThisBook(book: Book): void { //
     // Implement the name check for !empty values
     if (book.status === 'AVAILABLE') {
@@ -76,7 +71,6 @@ export class BookDetailComponent implements OnInit {
         book.dueDate = checkoutDate.toISOString().substring(0, 10); // 'yyyy-mm-dd'
         // https://gist.github.com/makuska/84457e0b6f614301b14575aaeaa0d917#debugging-journey
 
-        // this.bookService.deleteBook(book.id).subscribe(() => console.log("Temp delete")); // Working
         const checkout: Checkout = {
           id: this.checkoutService.generateRandomString(),
           // id: book.id,
@@ -101,6 +95,6 @@ export class BookDetailComponent implements OnInit {
         });
       }
     }
-  } //400 ERROR:
+  } //404 ERROR:
 
 }

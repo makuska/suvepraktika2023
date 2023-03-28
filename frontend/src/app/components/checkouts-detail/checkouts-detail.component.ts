@@ -20,13 +20,38 @@ export class CheckoutsDetailComponent implements OnInit{
    */
   checkout$!: Observable<Checkout>;
 
-
   constructor(
     private route: ActivatedRoute,
     private checkoutService: CheckoutService,
     private bookService: BookService,
     private router: Router,
   ) {
+  }
+
+  ngOnInit(): void {
+    this.checkout$ = this.route.params
+      .pipe(map(params => params['id']))
+      .pipe(switchMap(id => this.checkoutService.getCheckout(id)))
+    console.log(this.checkout$)
+  }
+
+  // TODO DEBUGGING!!!
+  // https://gist.github.com/makuska/84457e0b6f614301b14575aaeaa0d917#endpoint-debugging
+
+  returnThisCheckout(checkout: Checkout): void{
+    /*Object { id: "fc80bbda-18f8-4695-af8f-6044dbbe9ce2", borrowerFirstName: "John", borrowerLastName: "Gusikowski",
+    borrowedBook: {…}, checkedOutDate: "2020-09-11", dueDate: null, returnedDate: null, title: "The Far-Distant Oxus",
+    author: "Larry Rath", genre: "Fanfiction", … }*/
+    const book = checkout.borrowedBook;
+    book.status = 'AVAILABLE';
+    book.dueDate = null;
+    console.log(book);
+    this.bookService.saveBook(book).subscribe(() => console.log('Book saved successfully!'));
+    this.checkoutService.deleteCheckout(checkout.id).subscribe(() => {
+      console.log('Checkout deleted successfully!');
+      alert("Book returned successfully!");
+      this.router.navigate(["/checkouts"]);
+    });
   }
 
   changeDueDateText(checkout: Checkout){
@@ -45,37 +70,5 @@ export class CheckoutsDetailComponent implements OnInit{
       };
     }
   }
-
-
-
-  ngOnInit(): void {
-    this.checkout$ = this.route.params
-      .pipe(map(params => params['id']))
-      .pipe(switchMap(id => this.checkoutService.getCheckout(id)))
-    console.log(this.checkout$)
-
-  }
-
-  // TODO DEBUGGING!!!
-  // https://gist.github.com/makuska/84457e0b6f614301b14575aaeaa0d917#endpoint-debugging
-
-  returnThisCheckout(checkout: Checkout): void{
-    /*Object { id: "fc80bbda-18f8-4695-af8f-6044dbbe9ce2", borrowerFirstName: "John", borrowerLastName: "Gusikowski",
-    borrowedBook: {…}, checkedOutDate: "2020-09-11", dueDate: null, returnedDate: null, title: "The Far-Distant Oxus",
-    author: "Larry Rath", genre: "Fanfiction", … }*/
-    const book = checkout.borrowedBook;
-    book.status = 'AVAILABLE';
-    book.dueDate = null; // database has null values for 'AVAILABLE' books tho?
-    console.log(book);
-    // this.bookService.deleteBook(book.id).subscribe(() => console.log("Updating book details"));
-    this.bookService.saveBook(book).subscribe(() => console.log('Book saved successfully!')); // 200
-    this.checkoutService.deleteCheckout(checkout.id).subscribe(() => {
-      console.log('Checkout deleted successfully!');
-      alert("Book returned successfully!");
-      this.router.navigate(["/checkouts"]);
-      // Should force a reload on the /books:id route, when book is returned?
-    }); // 200
-  }
-
 
 }

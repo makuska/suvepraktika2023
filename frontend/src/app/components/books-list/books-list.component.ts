@@ -15,11 +15,11 @@ import {map} from "rxjs/operators";
 export class BooksListComponent implements OnInit {
 
   books$!: Observable<Page<Book>>;
-  pageSize: number = 10; // Default value for items per page
+  pageSize = 10; // Default value for items per page
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  pageIndex: number = 0; // Start paging at 0
-  currentPageSize: number = this.pageSize;
-  totalElements: number = 1000;
+  pageIndex = 0; // Start paging at 0
+  currentPageSize = this.pageSize;
+  totalElements = 1000;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   selectedStatus = '';
   search = '';
