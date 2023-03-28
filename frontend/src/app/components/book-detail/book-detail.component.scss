@@ -2,6 +2,12 @@
 // From Dev tools seems like, app.component.scss overwrites it
 //@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 // TODO console giving 'indigo-pink.css' errors
+.container {
+  max-width: 50%;
+  margin: auto;
+  display: block;
+}
+
 .mat-mdc-card-content {
   display: flex;
   flex-direction: column;
@@ -26,3 +32,7 @@ h3 {
 .status-available { color: green; }
 
 //#colored-status { display: inline; }
+
+.btn-delete {
+  margin-bottom: 10px;
+}

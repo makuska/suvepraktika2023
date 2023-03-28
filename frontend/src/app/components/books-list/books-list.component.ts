@@ -25,7 +25,6 @@ export class BooksListComponent implements OnInit {
   search = '';
   sortColumn?: string;
   sortDirection?: SortDirection;
-  // @ViewChild(MatSort) sort: MatSort;
   constructor( private bookService: BookService, ) {}
 
   ngOnInit(): void {
@@ -43,12 +42,11 @@ export class BooksListComponent implements OnInit {
       pageIndex: this.pageIndex,
       statusFilter: this.selectedStatus,
       sort: this.sortColumn, // Sort is now working with paging as well
-      direction: this.sortDirection
+      direction: this.sortDirection,
     });
   }
 
-  // An updated version of the sort, the angular MatSort seemed tricky, used other logic here, passing either
-  // 'asc', 'desc' or an empty string to url.
+  // An updated version of the sort, used other logic here, passing either 'asc', 'desc' or an empty string to url.
   sortCurrentPage(event: Sort): void {
     const sortColumn = event.active;
 
@@ -88,11 +86,6 @@ export class BooksListComponent implements OnInit {
     });
     this.paginator.firstPage(); //https://gist.github.com/makuska/84457e0b6f614301b14575aaeaa0d917#thispaginatorfirstpage
   }
-  /*
-  Current Request looks like:
-  GET http://localhost:8080/api/book/getBooks?page=0&size=10
-  No status parameter in the GET request.
-   */
 
   /*
   Thought about comparing the search result with Book objects id values, and if the id exists, then return a book.

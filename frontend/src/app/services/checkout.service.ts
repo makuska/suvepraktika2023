@@ -53,4 +53,23 @@ export class CheckoutService {
     return date < today;
   }
 
+  generateRandomString(): string {
+    const groups = [
+      this.generateRandomGroup(8),
+      this.generateRandomGroup(4),
+      this.generateRandomGroup(4),
+      this.generateRandomGroup(4),
+      this.generateRandomGroup(12),
+    ];
+    return groups.join("-");
+  }
+
+  generateRandomGroup(length: number): string {
+    const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+  }
 }

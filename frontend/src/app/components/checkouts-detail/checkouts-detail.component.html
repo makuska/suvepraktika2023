@@ -1,7 +1,6 @@
-<h1>HI?</h1>
 <div class="container mat-elevation-z5">
   <mat-card>
-    <mat-card-title>Checkout details</mat-card-title>
+    <mat-card-title style="text-align: center">Checkout details</mat-card-title>
     <mat-card-content>
       <ng-container *ngIf="(checkout$ | async) as checkout">
         <p>Borrower: {{checkout.borrowerFirstName}} {{checkout.borrowerLastName}}</p>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { BookService } from '../../services/book.service';
 import { Book } from '../../models/book';
 import { Observable } from 'rxjs';
@@ -59,14 +59,14 @@ export class BookDetailComponent implements OnInit {
   checkoutThisBook(book: Book): void { //
     // Implement the name check for !empty values
     if (book.status === 'AVAILABLE') {
-      // if (!this.bookService.isValidInput(this.borrowerFirstName)) {
-      //   alert('Invalid first name. Special characters are not allowed.');
-      //   return;
-      // }
-      // if (!this.bookService.isValidInput(this.borrowerLastName)) {
-      //   alert('Invalid last name. Special characters are not allowed.');
-      //   return;
-      // }
+      if (!this.bookService.isValidInput(this.borrowerFirstName)) {
+        alert('Invalid first name. Special characters are not allowed.');
+        return;
+      }
+      if (!this.bookService.isValidInput(this.borrowerLastName)) {
+        alert('Invalid last name. Special characters are not allowed.');
+        return;
+      }
       // The confirm() method returns true if the user clicked "OK", otherwise false.
       if (confirm("Do you want to check out '" + book.title + "'?")) {
         book.status = 'BORROWED';
@@ -78,13 +78,14 @@ export class BookDetailComponent implements OnInit {
 
         // this.bookService.deleteBook(book.id).subscribe(() => console.log("Temp delete")); // Working
         const checkout: Checkout = {
-          id: book.id,
+          id: this.checkoutService.generateRandomString(),
+          // id: book.id,
           borrowerFirstName: this.borrowerFirstName,
           borrowerLastName: this.borrowerLastName,
           borrowedBook: book,
           // https://stackoverflow.com/questions/23593052/format-javascript-date-as-yyyy-mm-dd
           checkedOutDate: new Date().toISOString().split('T')[0],
-          dueDate: checkoutDate.toString().substring(0, 10)
+          dueDate: checkoutDate.toISOString().substring(0, 10)
         }
         console.log(book);
         console.log(checkout);

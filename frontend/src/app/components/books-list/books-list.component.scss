@@ -1,28 +1,40 @@
 .container {
-  max-width: 1024px;
+  max-width: 90%;
   margin: 2em auto;
 }
-.status-borrowed {
-  color: red;
-}
+.status-borrowed {color: red;}
 
-.status-available {
-  color: green;
-}
+.status-available {color: green;}
 
 .favorite-icon {
   color: red;
   //border: 1px solid black;
 }
-//
-//.non-favorite-icon {
-//  background-color: black;
-//}
 
-//.mat-mdc-icon-button {
-//  background-color: blue;
-//}
+.status-field {
+  display: flex;
+  justify-content: flex-end;
+}
 
-//.mat-icon{
-//  color: red;
-//}
+.select-container {
+  display: flex;
+  align-items: center;
+}
+
+.select-container mat-label {margin-right: 10px;}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: center;
+  font-weight: bold;
+}
+
+td.checkout-count {
+  text-align: center;
+}
+
+

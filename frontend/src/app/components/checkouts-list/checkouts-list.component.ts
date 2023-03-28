@@ -5,6 +5,7 @@ import { PageEvent, MatPaginator } from "@angular/material/paginator";
 import { CheckoutService } from "../../services/checkout.service";
 import { Checkout } from "../../models/checkout";
 import { Sort } from "@angular/material/sort";
+import {Book} from "../../models/book";
 
 @Component({
   selector: 'app-checkouts-list',
@@ -23,6 +24,10 @@ export class CheckoutsListComponent implements OnInit{
   sortColumn?: string;
   sortDirection?: SortDirection;
 
+  // book: Book = {
+  //
+  // }
+
   constructor(private checkoutService: CheckoutService, ) {}
 
   ngOnInit(): void {
@@ -39,11 +44,20 @@ export class CheckoutsListComponent implements OnInit{
     });
   }
 
-  sortCurrentPage(event: Sort): void { // 500 error
-    // Should create a common Service file for functions like this.
+  sortCurrentPage(event: Sort): void {
     const sortColumn = event.active;
+    let sort = sortColumn;
 
-    // If the same column is clicked for the third time, clear the sort
+    if (sortColumn === 'title' || sortColumn === 'author' || sortColumn === 'year') {
+      sort = 'borrowedBook.' + sortColumn;
+    }
+    if (sortColumn === 'borrower') {
+      sort = 'borrowerFirstName';
+    }
+    if (sortColumn === 'checkoutDate') {
+      sort = 'checkedOutDate';
+    }
+
     if (this.sortColumn === sortColumn) {
       if (this.sortDirection === 'asc') {
         this.sortDirection = 'desc';
@@ -54,21 +68,19 @@ export class CheckoutsListComponent implements OnInit{
         this.sortDirection = 'asc';
       }
     } else {
-      // Setting the initial sort to ascending
       this.sortColumn = sortColumn;
       this.sortDirection = 'asc';
     }
 
-    // if sortColumn is an empty string, then 'undefined' is returned, otherwise this.sortColumn is returned.
-    const sort = this.sortColumn === '' ? undefined : this.sortColumn;
-    this.checkouts$ = this.checkoutService.getCheckouts({
-      pageIndex: this.pageIndex,
-      pageSize: this.currentPageSize,
-      sort: sort,
-      direction: this.sortDirection
-    });
-    console.log(sortColumn, this.sortDirection);
+    const direction = this.sortDirection;
+    const pageIndex = this.pageIndex;
+    const pageSize = this.currentPageSize;
+
+    console.log(this.sortDirection);
+
+    this.checkouts$ = this.checkoutService.getCheckouts({pageIndex, pageSize, sort, direction});
   }
+
 
   getOverDueStyle(checkout: Checkout) {
     const isOverDue = this.checkoutService.isOverDue(checkout);

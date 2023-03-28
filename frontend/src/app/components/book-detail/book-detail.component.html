@@ -2,7 +2,7 @@
 <!--https://gist.github.com/makuska/84457e0b6f614301b14575aaeaa0d917#prebook&#45;&#45;async&#45;&#45;jsonpre-->
 <div class="container mat-elevation-z4">
   <mat-card>
-    <mat-card-title>Book Details</mat-card-title>
+    <mat-card-title style="text-align: center">Book Details</mat-card-title>
     <mat-card-content>
       <ng-container *ngIf="(book$ | async) as book">
         <h3>Title: {{book.title}}</h3>
@@ -19,7 +19,7 @@
           <ng-container *ngIf="book.comment; else noComment">{{book.comment}}</ng-container>
           <ng-template #noComment>"Book has no comments"</ng-template>
         </p>
-        <button (click)="deleteThisBook(book)" mat-raised-button color="warn">Delete</button>
+        <button (click)="deleteThisBook(book)" mat-raised-button color="warn" class="btn-delete">Delete</button>
         <div *ngIf="book.status === 'AVAILABLE'">
           <mat-form-field>
             <input matInput [(ngModel)]="borrowerFirstName" placeholder="Enter your first name" required>
