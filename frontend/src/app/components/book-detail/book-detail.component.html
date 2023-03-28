@@ -1,1 +1,35 @@
-<pre>{{book$ | async | json}}</pre>
+<!--<pre>{{book$ | async | json}}</pre>-->
+<!--https://gist.github.com/makuska/84457e0b6f614301b14575aaeaa0d917#prebook&#45;&#45;async&#45;&#45;jsonpre-->
+<div class="container mat-elevation-z4">
+  <mat-card>
+    <mat-card-title style="text-align: center">Book Details</mat-card-title>
+    <mat-card-content>
+      <ng-container *ngIf="(book$ | async) as book">
+        <h3>Title: {{book.title}}</h3>
+        <p>Author: {{book.author}}</p>
+        <p>Genre: {{book.genre}}</p>
+        <p>Year of publication: {{book.year}}</p>
+        <p>Added: {{book.added}}</p>
+        <p>Checkout Count: {{book.checkOutCount}}</p>
+<!--        <p id="colored-status">Status: </p>-->
+        <p [ngClass]="{ 'status-borrowed': book.status === 'BORROWED',
+            'status-available': book.status === 'AVAILABLE' }">{{book.status}}</p> <!--Source: ChatAI-->
+        <p *ngIf="book.status !== 'AVAILABLE'">Due Date: {{book.dueDate}}</p> <!--No need to display the Due Date, if book is available-->
+        <p>Comment:
+          <ng-container *ngIf="book.comment; else noComment">{{book.comment}}</ng-container>
+          <ng-template #noComment>"Book has no comments"</ng-template>
+        </p>
+        <button (click)="deleteThisBook(book)" mat-raised-button color="warn" class="btn-delete">Delete</button>
+        <div *ngIf="book.status === 'AVAILABLE'">
+          <mat-form-field>
+            <input matInput [(ngModel)]="borrowerFirstName" placeholder="Enter your first name" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput [(ngModel)]="borrowerLastName" placeholder="Enter your last name" required>
+          </mat-form-field>
+          <button (click)="checkoutThisBook(book)" mat-raised-button>Checkout</button>
+        </div>
+      </ng-container>
+    </mat-card-content>
+  </mat-card>
+</div>

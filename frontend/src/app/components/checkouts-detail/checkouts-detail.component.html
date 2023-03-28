@@ -1,0 +1,19 @@
+<div class="container mat-elevation-z5">
+  <mat-card>
+    <mat-card-title style="text-align: center">Checkout details</mat-card-title>
+    <mat-card-content>
+      <ng-container *ngIf="(checkout$ | async) as checkout">
+        <p>Borrower: {{checkout.borrowerFirstName}} {{checkout.borrowerLastName}}</p>
+        <p>Book: {{checkout.borrowedBook.title}}</p>
+        <p>Author: {{checkout.borrowedBook.author}}</p>
+        <p>Year of publication: {{checkout.borrowedBook.year}}</p>
+        <p>Genre: {{checkout.borrowedBook.genre}}</p>
+        <p>Checkout Date: {{checkout.checkedOutDate}}</p>
+        <p>Due Date: <span [ngStyle]="changeDueDateText(checkout)">{{checkout.dueDate | date}}</span></p>
+        <p *ngIf="changeDueDateText(checkout)['color'] === 'red'" style="color: red; font-size: larger">OVERDUE!</p>
+        <button (click)="returnThisCheckout(checkout)" mat-raised-button>Return book</button>
+      </ng-container>
+    </mat-card-content>
+  </mat-card>
+</div>
+<!--Through testing, most likely the problem doesn't occur in this component file-->

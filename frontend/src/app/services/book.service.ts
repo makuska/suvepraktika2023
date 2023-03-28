@@ -12,11 +12,11 @@ import { RestUtil } from './rest-util';
 export class BookService {
 
   private readonly baseUrl = environment.backendUrl + '/api/book';
+  // https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
+  private readonly FAVOURITE_BOOKS_KEY = 'favourite_books';
 
-  constructor(
-    private http: HttpClient,
-  ) {
-  }
+
+  constructor( private http: HttpClient, ) {}
 
   getBooks(filter: Partial<PageRequest>): Observable<Page<Book>> {
     const url = this.baseUrl + '/getBooks';
@@ -39,6 +39,36 @@ export class BookService {
     const url = this.baseUrl + '/deleteBook';
     const params = new HttpParams().set('bookId', bookId);
     return this.http.delete<void>(url, {params});
+  }
+
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON
+  addBookToFavourites(book: Book): void {
+    const favouriteBooks = this.getFavouriteBooks();
+    favouriteBooks.push(book);
+    localStorage.setItem(this.FAVOURITE_BOOKS_KEY, JSON.stringify(favouriteBooks));
+  }
+
+  getFavouriteBooks(): Book[] {
+    const favouriteBooksJson = localStorage.getItem(this.FAVOURITE_BOOKS_KEY);
+    if (favouriteBooksJson) {
+      return JSON.parse(favouriteBooksJson);
+    }
+    return [];
+  }
+
+  removeFavouriteBook(book: Book): void { // Source: ChatAI
+    const favouriteBooks = this.getFavouriteBooks();
+    const index = favouriteBooks.findIndex(b => b.id === book.id);
+    if (index >= 0) {
+      favouriteBooks.splice(index, 1);
+      localStorage.setItem(this.FAVOURITE_BOOKS_KEY, JSON.stringify(favouriteBooks));
+    }
+  }
+
+  // https://stackoverflow.com/questions/37435529/proper-way-to-restrict-text-input-values-e-g-only-numbers
+  isValidInput(input: string): boolean {
+    const pattern = /^[a-zA-Z\s!?'-,]+$/;
+    return pattern.test(input);
   }
 
 }

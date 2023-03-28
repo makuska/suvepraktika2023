@@ -6,7 +6,7 @@ export type SortDirection = 'asc' | 'desc' | '';
 export interface Page<T> {
   content: T[];
   totalElements: number;
-  number: number; // page number
+  number: number;
   totalPages: number;
 }
 
@@ -17,5 +17,8 @@ export interface PageRequest {
   pageIndex: number;
   pageSize: number;
   sort?: string;
+  statusFilter: string;
+  search: string;
   direction?: SortDirection;
 }
+

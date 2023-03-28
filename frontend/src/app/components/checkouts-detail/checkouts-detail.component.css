@@ -1,0 +1,12 @@
+.container {
+  max-width: 50%;
+  margin: auto;
+  display: block;
+}
+
+.mat-mdc-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
