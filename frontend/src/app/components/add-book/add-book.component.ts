@@ -14,7 +14,7 @@ export class AddBookComponent implements OnInit{
   today = new Date();
 
   book: Book = {
-    id: this.checkoutService.generateRandomString(),
+    id: this.checkoutService.generateUUID(),
     title: '',
     author: '',
     genre: '',

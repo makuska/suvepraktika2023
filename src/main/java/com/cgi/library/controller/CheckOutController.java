@@ -24,25 +24,25 @@ public class CheckOutController {
 
     @GetMapping(value = "getCheckouts")
     public ResponseEntity<Page<CheckOutDTO>> getCheckOuts(Pageable pageable) {
-        return ResponseEntity.ok(checkOutService.getCheckOuts(pageable));
+        return ResponseEntity.ok(this.checkOutService.getCheckOuts(pageable));
     }
 
     @GetMapping(value = "getCheckout")
     public ResponseEntity<CheckOutDTO> getCheckOut(@RequestParam(value = "checkOutId") UUID checkOutId) {
-        return ResponseEntity.ok(checkOutService.getCheckOut(checkOutId));
+        return ResponseEntity.ok(this.checkOutService.getCheckOut(checkOutId));
     }
     // Should add an exception
     //https://www.codecademy.com/paths/create-rest-apis-with-spring-and-java
 
-    @PostMapping(value = "checkout")
+    @PostMapping(value = "saveCheckout")
     public ResponseEntity<String> saveCheckOut(@RequestBody CheckOutDTO checkOutDTO) {
-        checkOutService.saveCheckOut(checkOutDTO);
+        this.checkOutService.saveCheckOut(checkOutDTO);
         return ResponseEntity.ok("");
     }
 
     @DeleteMapping(value = "checkout") //changing this to deleteCheckout didn't help
     public ResponseEntity<String> deleteCheckOut(@RequestParam(value = "checkOutId") UUID checkOutId) {
-        checkOutService.deleteCheckOut(checkOutId);
+        this.checkOutService.deleteCheckOut(checkOutId);
         return ResponseEntity.ok("");
     }
 

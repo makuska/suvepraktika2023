@@ -72,7 +72,7 @@ export class BookDetailComponent implements OnInit {
         // https://gist.github.com/makuska/84457e0b6f614301b14575aaeaa0d917#debugging-journey
 
         const checkout: Checkout = {
-          id: this.checkoutService.generateRandomString(),
+          id: this.checkoutService.generateUUID(),
           // id: book.id,
           borrowerFirstName: this.borrowerFirstName,
           borrowerLastName: this.borrowerLastName,

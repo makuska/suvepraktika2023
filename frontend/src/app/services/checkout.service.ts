@@ -6,6 +6,7 @@ import { Checkout } from '../models/checkout';
 import { Observable } from 'rxjs'; //https://gist.github.com/makuska/84457e0b6f614301b14575aaeaa0d917#import--observable--from-rxjs
 import { environment } from 'src/environments/environment'; //https://gist.github.com/makuska/84457e0b6f614301b14575aaeaa0d917#import--environment--from-srcenvironmentsenvironment
 import { RestUtil } from './rest-util';
+import {v4 as uuidv4} from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -53,23 +54,27 @@ export class CheckoutService {
     return date < today;
   }
 
-  generateRandomString(): string {
-    const groups = [
-      this.generateRandomGroup(8),
-      this.generateRandomGroup(4),
-      this.generateRandomGroup(4),
-      this.generateRandomGroup(4),
-      this.generateRandomGroup(12),
-    ];
-    return groups.join("-");
-  }
+  // generateRandomString(): string {
+  //   const groups = [
+  //     this.generateRandomGroup(8),
+  //     this.generateRandomGroup(4),
+  //     this.generateRandomGroup(4),
+  //     this.generateRandomGroup(4),
+  //     this.generateRandomGroup(12),
+  //   ];
+  //   return groups.join("-");
+  // }
+  //
+  // generateRandomGroup(length: number): string {
+  //   const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+  //   let result = "";
+  //   for (let i = 0; i < length; i++) {
+  //     result += characters.charAt(Math.floor(Math.random() * characters.length));
+  //   }
+  //   return result;
+  // }
 
-  generateRandomGroup(length: number): string {
-    const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
-    let result = "";
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return result;
+  generateUUID(): string{
+    return uuidv4();
   }
 }
