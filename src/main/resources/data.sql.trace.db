@@ -1,0 +1,3 @@
+2023-03-31 15:48:30 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]1dc8a895-d020-4930-83ca-79a585faf04e"; SQL statement:
+1dc8a895-d020-4930-83ca-79a585faf04e [42000-210]

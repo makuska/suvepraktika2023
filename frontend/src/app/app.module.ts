@@ -12,6 +12,7 @@ import { FormsModule } from "@angular/forms";
 import { CheckoutsListComponent } from './components/checkouts-list/checkouts-list.component';
 import { CheckoutsDetailComponent } from './components/checkouts-detail/checkouts-detail.component';
 import { FavouriteBooksComponent } from './components/favourite-books/favourite-books.component';
+import { AddBookComponent } from './components/add-book/add-book.component';
 // import { MatSortModule } from "@angular/material/sort";
 
 @NgModule({
@@ -22,6 +23,7 @@ import { FavouriteBooksComponent } from './components/favourite-books/favourite-
     CheckoutsListComponent,
     CheckoutsDetailComponent,
     FavouriteBooksComponent,
+    AddBookComponent,
   ],
     imports: [
         BrowserModule,

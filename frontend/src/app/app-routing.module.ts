@@ -5,6 +5,7 @@ import { BookDetailComponent } from './components/book-detail/book-detail.compon
 import { CheckoutsListComponent } from "./components/checkouts-list/checkouts-list.component";
 import { CheckoutsDetailComponent } from "./components/checkouts-detail/checkouts-detail.component";
 import { FavouriteBooksComponent } from "./components/favourite-books/favourite-books.component";
+import { AddBookComponent } from "./components/add-book/add-book.component";
 
 // https://gist.github.com/makuska/84457e0b6f614301b14575aaeaa0d917#routing-in-angular
 // https://angular.io/guide/router#defining-a-basic-route
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'checkouts', component: CheckoutsListComponent}, // Checkouts route
   {path: 'checkouts/:id', component: CheckoutsDetailComponent}, // Checkouts detail route
   {path: 'favourite-books', component: FavouriteBooksComponent}, // Favourite books route
+  {path: 'add-book', component: AddBookComponent}, // Add new books route
 ];
 
 @NgModule({

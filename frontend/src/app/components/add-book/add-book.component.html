@@ -1,0 +1,33 @@
+<form (ngSubmit)="submitBook()">
+  <label>
+    Title:
+    <input type="text" [(ngModel)]="book.title" name="title" required>
+  </label>
+  <br>
+  <label>
+    Author:
+    <input type="text" [(ngModel)]="book.author" name="author" required>
+  </label>
+  <br>
+  <label>
+    Genre:
+    <input type="text" [(ngModel)]="book.genre" name="genre" required>
+  </label>
+  <br>
+  <label>
+    Year:
+    <input type="number" [(ngModel)]="book.year" name="year" required>
+  </label>
+  <br>
+  <label>
+    Status:
+    <input type="text" [(ngModel)]="book.status" name="status" required>
+  </label>
+  <br>
+  <label>
+    Comment:
+    <textarea [(ngModel)]="book.comment" name="comment"></textarea>
+  </label>
+  <br>
+  <button type="submit">Save Book</button>
+</form>
