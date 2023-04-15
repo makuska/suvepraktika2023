@@ -25,6 +25,8 @@ public class BookDTO {
 
     private String comment;
 
+    // No checkouts cause no need to pass the information to clients
+
     public UUID getId() {
         return id;
     }

@@ -19,7 +19,7 @@ export class BooksListComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageIndex = 0; // Start paging at 0
   currentPageSize = this.pageSize;
-  totalElements = 1000;
+  totalElements = 10000;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   selectedStatus = '';
   search = '';

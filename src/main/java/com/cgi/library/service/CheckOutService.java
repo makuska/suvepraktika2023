@@ -23,19 +23,19 @@ public class CheckOutService {
 
     public Page<CheckOutDTO> getCheckOuts(Pageable pageable) {
         ModelMapper modelMapper = ModelMapperFactory.getMapper();
-        return checkOutRepository.findAll(pageable).map(checkOut -> modelMapper.map(checkOut, CheckOutDTO.class));
+        return this.checkOutRepository.findAll(pageable).map(checkOut -> modelMapper.map(checkOut, CheckOutDTO.class));
     }
 
     public CheckOutDTO getCheckOut(UUID checkOutId) {
-        CheckOut checkOut = checkOutRepository.getOne(checkOutId);
+        CheckOut checkOut = this.checkOutRepository.getOne(checkOutId);
         return ModelMapperFactory.getMapper().map(checkOut, CheckOutDTO.class);
     }
 
     public void saveCheckOut(CheckOutDTO checkOutDTO) {
-        checkOutRepository.save(ModelMapperFactory.getMapper().map(checkOutDTO, CheckOut.class));
+        this.checkOutRepository.save(ModelMapperFactory.getMapper().map(checkOutDTO, CheckOut.class));
     }
 
     public void deleteCheckOut(UUID checkOutId) {
-        checkOutRepository.deleteById(checkOutId);
+        this.checkOutRepository.deleteById(checkOutId);
     }
 }

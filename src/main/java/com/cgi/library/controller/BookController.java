@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -23,22 +24,28 @@ public class BookController {
 
     @GetMapping("/getBooks")
     public ResponseEntity<Page<BookDTO>> getBooks(Pageable pageable) {
-        return ResponseEntity.ok(bookService.getBooks(pageable)); //https://www.baeldung.com/spring-response-entity
+        return ResponseEntity.ok(this.bookService.getBooks(pageable)); //https://www.baeldung.com/spring-response-entity
     }
 
-    @GetMapping("/getBook") // Working
+    @GetMapping("/getBook")
     public ResponseEntity<BookDTO> getBook(@RequestParam(value = "bookId") UUID bookId) {
-        return ResponseEntity.ok(bookService.getBook(bookId));
+        return ResponseEntity.ok(this.bookService.getBook(bookId));
     }
 
-    @PostMapping("/saveBook") // Not working for checking out a book (works when returning a book)
+    @PostMapping("/saveBook")
     public ResponseEntity<String> saveBook(@RequestBody BookDTO book) {
-        return ResponseEntity.ok(String.valueOf(bookService.saveBook(book)));
+        return ResponseEntity.ok(String.valueOf(this.bookService.saveBook(book)));
     }
 
-    @DeleteMapping("/deleteBook") // Working
+    @DeleteMapping("/deleteBook")
     public ResponseEntity<String> deleteBook(@RequestParam(value = "bookId") UUID bookId) {
-        bookService.deleteBook(bookId);
+        this.bookService.deleteBook(bookId);
         return ResponseEntity.ok("");
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<BookDTO>> searchBooks(@RequestParam(value = "bookName") String bookName){
+        return ResponseEntity.ok(this.bookService.searchBooks(bookName));
+    }
+
 }

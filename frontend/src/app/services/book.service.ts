@@ -66,8 +66,9 @@ export class BookService {
   }
 
   // https://stackoverflow.com/questions/37435529/proper-way-to-restrict-text-input-values-e-g-only-numbers
+  //TODO Backend should also have appropriate filters in place
   isValidInput(input: string): boolean {
-    const pattern = /^[a-zA-Z\s!?'-,]+$/;
+    const pattern = /^[a-zA-Z0-9\s!?'-,]+$/;
     return pattern.test(input);
   }
 
